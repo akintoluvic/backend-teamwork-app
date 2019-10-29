@@ -1,0 +1,28 @@
+{
+  "name": "backend-teamwork-app",
+  "version": "1.0.0",
+  "description": "REST API using Node, Express, Postgres etc.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akintoluvic/backend-teamwork-app.git"
+  },
+  "keywords": [
+    "REST",
+    "API",
+    "using",
+    "Node",
+    "Express",
+    "Postgres",
+    "etc."
+  ],
+  "author": "Vick Greenfields",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akintoluvic/backend-teamwork-app/issues"
+  },
+  "homepage": "https://github.com/akintoluvic/backend-teamwork-app#readme"
+}
