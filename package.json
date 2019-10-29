@@ -24,5 +24,11 @@
   "bugs": {
     "url": "https://github.com/akintoluvic/backend-teamwork-app/issues"
   },
-  "homepage": "https://github.com/akintoluvic/backend-teamwork-app#readme"
+  "homepage": "https://github.com/akintoluvic/backend-teamwork-app#readme",
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
