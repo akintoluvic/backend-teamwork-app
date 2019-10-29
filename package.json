@@ -26,7 +26,11 @@
   },
   "homepage": "https://github.com/akintoluvic/backend-teamwork-app#readme",
   "devDependencies": {
-    "nodemon": "^1.19.4"
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "nodemon": "^1.19.4",
+    "prettier": "^1.18.2"
   },
   "dependencies": {
     "express": "^4.17.1"
