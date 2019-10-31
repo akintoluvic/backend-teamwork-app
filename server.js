@@ -8,8 +8,10 @@ app.set('port', port);
 
 const server = http.createServer(app)
 
-server.listen(port)
+// server.listen(port)
 
-exports.closeServer = function(){
-    server.close();
-  };
+if(!module.parent){ server.listen(port); }
+
+// exports.closeServer = function(){
+//     server.close();
+//   };
