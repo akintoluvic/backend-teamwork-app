@@ -4,7 +4,7 @@
   "description": "REST API using Node, Express, Postgres etc.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jasmine-node spec"
   },
   "repository": {
     "type": "git",
