@@ -3,11 +3,11 @@ const app = express()
 
 app.get('/', (req, res, next) => {
     res.json({
-        message: 'Req successful'
+        message: 'Hello World'
     })
     next()
 })
 
-app.get('/api/v1/', (req, res) => res.send('Hello World!'))
+app.get('/api/v1/', (req, res) => res.send('Base v1 Req success!'))
 
 module.exports = app;
