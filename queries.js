@@ -31,9 +31,9 @@ const createUser = (request, response) => {
 
   pool.query('INSERT INTO users (name, email) VALUES ($1, $2)', [name, email], (error, results) => {
     if (error) {
-      throw error
+      throw error;
     }
-    response.status(201).send(`User added with ID: ${result.insertId}`)
+    response.status(201).send(`User added with ID: ${results.insertId}`)
   })
 }
 
