@@ -37,5 +37,3 @@ app.delete('/users/:id', db.deleteUser)
 app.get('/api/v1/', (req, res) => res.send('Base v1 Req success!'))
 
 module.exports = app;
-
- 
