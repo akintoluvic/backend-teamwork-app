@@ -27,13 +27,13 @@ const getCommentById = (request, response) => {
 }
 
 const createComment = (request, response) => {
-  const { email, password } = request.body
+  const { comment, authorId, articleId, gifId } = request.body
 
-  pool.query('INSERT INTO comments (email, password) VALUES ($1, $2)', [email, password], (error, results) => {
+  pool.query('INSERT INTO comments (comment, authorId, articleId, gifId) VALUES ($1, $2, $3, $4)', [comment, authorId, articleId, gifId], (error, results) => {
     if (error) {
       throw error;
     }
-    response.status(201).send(`User added with ID: ${results.id}`)
+    response.status(201).send(`Comment added with ID: ${results.id}`)
     console.log(results);
   })
 }
@@ -61,7 +61,7 @@ const deleteComment = (request, response) => {
     if (error) {
       throw error
     }
-    response.status(200).send(`User deleted with ID: ${commentId}`)
+    response.status(200).send(`Comment deleted with ID: ${commentId}`)
   })
 }
 

@@ -2,10 +2,8 @@ const express = require('express')
 const bodyParser = require('body-parser');
 const users = require('./routes/userQueries')
 const gifs = require('./routes/gifs')
+const comments = require('./routes/comments')
 const app = express()
-
-
-const connectionString = "postgres://postgres:greene@localhost::1/greene-one";
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -40,6 +38,12 @@ app.get('/gifs/:id', gifs.getGifById)
 app.post('/gifs', gifs.createGif)
 // app.put('/gifs/:id', gifs.updateGif)
 app.delete('/gifs/:id', gifs.deleteGif)
+
+app.get('/comments', comments.getComments)
+app.get('/comments/:id', comments.getCommentById)
+app.post('/comments', comments.createComment)
+// app.put('/gifs/:id', gifs.updateGif)
+app.delete('/comments/:id', comments.deleteComment)
 
 app.get('/api/v1/', (req, res) => res.send('Base v1 Req success!'))
 

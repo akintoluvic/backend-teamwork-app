@@ -25,7 +25,7 @@ inapropriate VARCHAR(30) DEFAULT 'no'
 );
 
 CREATE TABLE gifs (
-articleId SERIAL PRIMARY KEY,
+gifId SERIAL PRIMARY KEY,
 title VARCHAR(30) NOT NULL,
 imageUrl VARCHAR(255) NOT NULL,
 authorId INTEGER REFERENCES users(userId),
@@ -37,7 +37,9 @@ CREATE TABLE comments (
 commentId SERIAL PRIMARY KEY,
 comment VARCHAR(255) NOT NULL,
 authorId INTEGER REFERENCES users(userId),
-inapropriate VARCHAR(30) DEFAULT 'no'
+inapropriate VARCHAR(30) DEFAULT 'no',
+articleId INTEGER REFERENCES articles(articleId),
+gifId INTEGER REFERENCES gifs(gifId)
 );
 
 authorId
