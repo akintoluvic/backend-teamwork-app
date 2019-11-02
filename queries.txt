@@ -1,0 +1,40 @@
+
+CREATE TABLE users (
+userId SERIAL PRIMARY KEY,
+firstName VARCHAR(30),
+lastName VARCHAR(30),
+email VARCHAR(30) NOT NULL,
+password VARCHAR(30) NOT NULL,
+gender VARCHAR(30),
+jobRole VARCHAR(30),
+department VARCHAR(30),
+address VARCHAR(255),
+userType VARCHAR(30) DEFAULT 'employee',
+);
+
+INSERT INTO users (firstName, firstName, lastName, email, password, gender, jobRole, department, address)
+('Moha', 'Buhar', 'moha@buar.com', 'mohabu');
+
+CREATE TABLE articles (
+articleId SERIAL PRIMARY KEY,
+title VARCHAR(30) NOT NULL,
+article VARCHAR(255) NOT NULL,
+tag VARCHAR(30) NOT NULL,
+inapropriate VARCHAR(30) DEFAULT 'no',
+);
+
+CREATE TABLE gifs (
+articleId SERIAL PRIMARY KEY,
+title VARCHAR(30) NOT NULL,
+imageUrl VARCHAR(255) NOT NULL,
+tag VARCHAR(30) NOT NULL,
+inapropriate VARCHAR(30) DEFAULT 'no',
+);
+
+CREATE TABLE comments (
+commentId SERIAL PRIMARY KEY,
+comment VARCHAR(255) NOT NULL,
+inapropriate VARCHAR(30) DEFAULT 'no',
+);
+
+authorId
