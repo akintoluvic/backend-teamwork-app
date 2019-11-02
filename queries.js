@@ -54,9 +54,9 @@ const updateUser = (request, response) => {
 }
 
 const deleteUser = (request, response) => {
-  const id = parseInt(request.params.id)
+  const userId = parseInt(request.params.id)
 
-  pool.query('DELETE FROM users WHERE userId = $1', [id], (error, results) => {
+  pool.query('DELETE FROM users WHERE userId = $1', [userId], (error, results) => {
     if (error) {
       throw error
     }
