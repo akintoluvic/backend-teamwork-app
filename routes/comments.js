@@ -1,10 +1,10 @@
 const Pool = require('pg').Pool
 const pool = new Pool({
-  user: 'me',
-  host: 'localhost',
-  database: 'api',
-  password: 'password',
-  port: 5432,
+  user: 'process.env.PSQL_USER',
+  host: 'process.env.PSQL_HOST',
+  database: 'process.env.PSQL_DATABASE',
+  password: 'process.env.PSQL_PASSWORD',
+  port: process.env.PSQL_PORT
 })
 const getComments = (request, response) => {
   pool.query('SELECT * FROM comments ORDER BY commentId ASC', (error, results) => {
