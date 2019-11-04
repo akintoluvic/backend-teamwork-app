@@ -1,6 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser');
-const users = require('./routes/userQueries')
+const users = require('./routes/users')
 const gifs = require('./routes/gifs')
 const comments = require('./routes/comments')
 const articles = require('./routes/articles')
