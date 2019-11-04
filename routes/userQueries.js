@@ -1,13 +1,7 @@
-const Pool = require('pg').Pool
-const pool = new Pool({
-  user: 'process.env.PSQL_USER',
-  host: 'process.env.PSQL_HOST',
-  database: 'process.env.PSQL_DATABASE',
-  password: 'process.env.PSQL_PASSWORD',
-  port: process.env.PSQL_PORT
-})
+const db = require('../db')
+
 const getUsers = (request, response) => {
-  pool.query('SELECT * FROM users ORDER BY userId ASC', (error, results) => {
+  db.query('SELECT * FROM users ORDER BY userId ASC', (error, results) => {
     if (error) {
       throw error
     }
@@ -18,7 +12,7 @@ const getUsers = (request, response) => {
 const getUserById = (request, response) => {
   const id = parseInt(request.params.id)
 
-  pool.query('SELECT * FROM users WHERE userId = $1', [id], (error, results) => {
+  db.query('SELECT * FROM users WHERE userId = $1', [id], (error, results) => {
     if (error) {
       throw error
     }
@@ -29,7 +23,7 @@ const getUserById = (request, response) => {
 const createUser = (request, response) => {
   const { email, password } = request.body
 
-  pool.query('INSERT INTO users (email, password) VALUES ($1, $2)', [email, password], (error, results) => {
+  db.query('INSERT INTO users (email, password) VALUES ($1, $2)', [email, password], (error, results) => {
     if (error) {
       throw error;
     }
@@ -42,7 +36,7 @@ const updateUser = (request, response) => {
   const userId = parseInt(request.params.id)
   const { firstName, lastName } = request.body
 
-  pool.query(
+  db.query(
     'UPDATE users SET firstName = $1, lastName = $2 WHERE userId = $3',
     [firstName, lastName, userId],
     (error, results) => {
@@ -57,7 +51,7 @@ const updateUser = (request, response) => {
 const deleteUser = (request, response) => {
   const userId = parseInt(request.params.id)
 
-  pool.query('DELETE FROM users WHERE userId = $1', [userId], (error, results) => {
+  db.query('DELETE FROM users WHERE userId = $1', [userId], (error, results) => {
     if (error) {
       throw error
     }

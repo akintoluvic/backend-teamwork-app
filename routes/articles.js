@@ -1,13 +1,7 @@
-const Pool = require('pg').Pool
-const pool = new Pool({
-  user: 'process.env.PSQL_USER',
-  host: 'process.env.PSQL_HOST',
-  database: 'process.env.PSQL_DATABASE',
-  password: 'process.env.PSQL_PASSWORD',
-  port: process.env.PSQL_PORT
-})
+const db = require('../db')
+
 const getArticles = (request, response) => {
-  pool.query('SELECT * FROM articles ORDER BY articleId ASC', (error, results) => {
+  db.query('SELECT * FROM articles ORDER BY articleId ASC', (error, results) => {
     if (error) {
       throw error
     }
@@ -18,7 +12,7 @@ const getArticles = (request, response) => {
 const getArticleById = (request, response) => {
   const id = parseInt(request.params.id)
 
-  pool.query('SELECT * FROM articles WHERE articleId = $1', [id], (error, results) => {
+  db.query('SELECT * FROM articles WHERE articleId = $1', [id], (error, results) => {
     if (error) {
       throw error
     }
@@ -29,7 +23,7 @@ const getArticleById = (request, response) => {
 const createArticle = (request, response) => {
   const { title, article, authorId, tag } = request.body
 
-  pool.query('INSERT INTO articles (title, article, authorId, tag) VALUES ($1, $2, $3, $4)', [title, article, authorId, tag], (error, results) => {
+  db.query('INSERT INTO articles (title, article, authorId, tag) VALUES ($1, $2, $3, $4)', [title, article, authorId, tag], (error, results) => {
     if (error) {
       throw error;
     }
@@ -42,7 +36,7 @@ const updateArticle = (request, response) => {
   const articleId = parseInt(request.params.id)
   const {  title, article, authorId, tag } = request.body
 
-  pool.query(
+  db.query(
     'UPDATE articles SET title = $1, article = $2, authorId = $3, tag = $4 WHERE articleId = $5',
     [title, article, authorId, tag, articleId],
     (error, results) => {
@@ -57,7 +51,7 @@ const updateArticle = (request, response) => {
 const deleteArticle = (request, response) => {
   const articleId = parseInt(request.params.id)
 
-  pool.query('DELETE FROM articles WHERE articleId = $1', [articleId], (error, results) => {
+  db.query('DELETE FROM articles WHERE articleId = $1', [articleId], (error, results) => {
     if (error) {
       throw error
     }

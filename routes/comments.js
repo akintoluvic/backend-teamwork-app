@@ -1,13 +1,7 @@
-const Pool = require('pg').Pool
-const pool = new Pool({
-  user: 'process.env.PSQL_USER',
-  host: 'process.env.PSQL_HOST',
-  database: 'process.env.PSQL_DATABASE',
-  password: 'process.env.PSQL_PASSWORD',
-  port: process.env.PSQL_PORT
-})
+const db = require('../db')
+
 const getComments = (request, response) => {
-  pool.query('SELECT * FROM comments ORDER BY commentId ASC', (error, results) => {
+  db.query('SELECT * FROM comments ORDER BY commentId ASC', (error, results) => {
     if (error) {
       throw error
     }
@@ -18,7 +12,7 @@ const getComments = (request, response) => {
 const getCommentById = (request, response) => {
   const id = parseInt(request.params.id)
 
-  pool.query('SELECT * FROM comments WHERE commentId = $1', [id], (error, results) => {
+  db.query('SELECT * FROM comments WHERE commentId = $1', [id], (error, results) => {
     if (error) {
       throw error
     }
@@ -29,7 +23,7 @@ const getCommentById = (request, response) => {
 const createComment = (request, response) => {
   const { comment, authorId, articleId, gifId } = request.body
 
-  pool.query('INSERT INTO comments (comment, authorId, articleId, gifId) VALUES ($1, $2, $3, $4)', [comment, authorId, articleId, gifId], (error, results) => {
+  db.query('INSERT INTO comments (comment, authorId, articleId, gifId) VALUES ($1, $2, $3, $4)', [comment, authorId, articleId, gifId], (error, results) => {
     if (error) {
       throw error;
     }
@@ -42,7 +36,7 @@ const createComment = (request, response) => {
 //   const userId = parseInt(request.params.id)
 //   const { firstName, lastName } = request.body
 
-//   pool.query(
+//   db.query(
 //     'UPDATE comments SET firstName = $1, lastName = $2 WHERE userId = $3',
 //     [firstName, lastName, commentId],
 //     (error, results) => {
@@ -57,7 +51,7 @@ const createComment = (request, response) => {
 const deleteComment = (request, response) => {
   const commentId = parseInt(request.params.id)
 
-  pool.query('DELETE FROM comments WHERE commentId = $1', [commentId], (error, results) => {
+  db.query('DELETE FROM comments WHERE commentId = $1', [commentId], (error, results) => {
     if (error) {
       throw error
     }

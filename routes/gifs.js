@@ -1,13 +1,7 @@
-const Pool = require('pg').Pool
-const pool = new Pool({
-  user: 'process.env.PSQL_USER',
-  host: 'process.env.PSQL_HOST',
-  database: 'process.env.PSQL_DATABASE',
-  password: 'process.env.PSQL_PASSWORD',
-  port: process.env.PSQL_PORT
-})
+const db = require('../db')
+
 const getGifs = (request, response) => {
-  pool.query('SELECT * FROM gifs ORDER BY gifId ASC', (error, results) => {
+  db.query('SELECT * FROM gifs ORDER BY gifId ASC', (error, results) => {
     if (error) {
       throw error
     }
@@ -18,7 +12,7 @@ const getGifs = (request, response) => {
 const getGifById = (request, response) => {
   const id = parseInt(request.params.id)
 
-  pool.query('SELECT * FROM gifs WHERE gifId = $1', [id], (error, results) => {
+  db.query('SELECT * FROM gifs WHERE gifId = $1', [id], (error, results) => {
     if (error) {
       throw error
     }
@@ -29,7 +23,7 @@ const getGifById = (request, response) => {
 const createGif = (request, response) => {
   const { title, imageUrl, authorId, tag } = request.body
 
-  pool.query('INSERT INTO gifs (title, imageUrl, authorId, tag) VALUES ($1, $2, $3, $4)', [ title, imageUrl, authorId, tag ], (error, results) => {
+  db.query('INSERT INTO gifs (title, imageUrl, authorId, tag) VALUES ($1, $2, $3, $4)', [ title, imageUrl, authorId, tag ], (error, results) => {
     if (error) {
       throw error;
     }
@@ -42,7 +36,7 @@ const createGif = (request, response) => {
 //   const userId = parseInt(request.params.id)
 //   const { firstName, lastName } = request.body
 
-//   pool.query(
+//   db.query(
 //     'UPDATE users SET firstName = $1, lastName = $2 WHERE userId = $3',
 //     [firstName, lastName, userId],
 //     (error, results) => {
@@ -57,7 +51,7 @@ const createGif = (request, response) => {
 const deleteGif = (request, response) => {
   const gifId = parseInt(request.params.id)
 
-  pool.query('DELETE FROM gifs WHERE gifId = $1', [gifId], (error, results) => {
+  db.query('DELETE FROM gifs WHERE gifId = $1', [gifId], (error, results) => {
     if (error) {
       throw error
     }
