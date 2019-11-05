@@ -83,32 +83,18 @@ const deleteArticle = (request, response) => {
           "error": error
         })
       }
+      
       response.status(201).json({
         "status": "success",
         "data": {
-          "message": "Article deleted Successfully",
+          "message": "Article and comments deleted Successfully",
           "articleId": articleId
         }
       })
     }
   )
-  db.query('DELETE FROM comments WHERE articleId = $1', [articleId], (error, results) => {
-    if (error) {
-      response.status(400).json({
-        "status": "error",
-        "error": error
-      })
-    }
-    response.status(201).json({
-      "status": "success",
-      "data": {
-        "message": "Article deleted Successfully",
-        "articleId": articleId
-      }
-    })
-  }
-)
 }
+
 
 module.exports = {
   getArticles,
