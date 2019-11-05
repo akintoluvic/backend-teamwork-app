@@ -23,31 +23,28 @@ const getArticleById = (request, response) => {
 const createArticle = (request, response) => {
   const { title, article, authorId, tag } = request.body
 
-  db.query('INSERT INTO articles (title, article, authorId, tag) VALUES ($1, $2, $3, $4)', [title, article, authorId, tag], (error, results) => {
+  db.query('INSERT INTO articles (title, article, authorId, tag) VALUES ($1, $2, $3, $4) RETURNING articleId', [title, article, authorId, tag], (error, results) => {
     if (error) {
-      throw error;
+      response.status(400).json({
+        "status": "error",
+        "error": error
+      })
     }
-    response.status(201).send(`Article added with ID: ${results.id}`)
+    response.status(201).json({
+      "status": "success",
+      "data": {
+        "message": "Article Created Successfully",
+        "articleId": results.rows[0].articleid,
+        "title": title,
+        "article": article,
+        "authorId": authorId,
+        "tag": tag
+      }
+    })
     console.log(results);
   })
 }
-// const createArticle = (request, response) => {
-//   const { title, article, authorId, tag } = request.body
 
-//   db.query('INSERT INTO articles (title, article, authorId, tag) VALUES ($1, $2, $3, $4) RETURNING articleId', [title, article, authorId, tag], (error, results) => {
-//     if (error) {
-//       throw error;
-//     }
-//     response.status(201).json({
-//       "status": "success",
-//       "data": {
-//         "message": "Article Created Successfully",
-//         "articleId": results.rows[0].articleid
-//       }
-//     })
-//     console.log(results);
-//   })
-// }
 const updateArticle = (request, response) => {
   const articleId = parseInt(request.params.id)
   const {  title, article, authorId, tag } = request.body
