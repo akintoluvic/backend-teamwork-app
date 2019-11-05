@@ -1,4 +1,7 @@
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const db = require('../db')
+
 
 const getUsers = (request, response) => {
   db.query('SELECT * FROM users ORDER BY userId ASC', (error, results) => {
