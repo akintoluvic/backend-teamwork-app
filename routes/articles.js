@@ -38,25 +38,38 @@ const createArticle = (request, response) => {
         "title": title,
         "article": article,
         "authorId": authorId,
-        "tag": tag
+        "tag": tag,
+        // "createdOn": results.rows[0].createdOn
       }
     })
-    console.log(results);
   })
 }
 
 const updateArticle = (request, response) => {
   const articleId = parseInt(request.params.id)
-  const {  title, article, authorId, tag } = request.body
+  const {  title, article, tag } = request.body
 
   db.query(
-    'UPDATE articles SET title = $1, article = $2, authorId = $3, tag = $4 WHERE articleId = $5',
-    [title, article, authorId, tag, articleId],
+    'UPDATE articles SET title = $1, article = $2, tag = $3 WHERE articleId = $4 RETURNING authorId',
+    [title, article, tag, articleId],
     (error, results) => {
       if (error) {
-        throw error
+        response.status(400).json({
+          "status": "error",
+          "error": error
+        })
       }
-      response.status(200).send(`Article modified with ID: ${articleId}`)
+      response.status(201).json({
+        "status": "success",
+        "data": {
+          "message": "Article updated Successfully",
+          "articleId": results.rows[0].articleid,
+          "title": title,
+          "article": article,
+          "authorId": results.rows[0].authorId,
+          "tag": tag
+        }
+      })
     }
   )
 }
