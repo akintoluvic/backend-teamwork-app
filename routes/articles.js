@@ -50,7 +50,7 @@ const updateArticle = (request, response) => {
   const {  title, article, tag } = request.body
 
   db.query(
-    'UPDATE articles SET title = $1, article = $2, tag = $3 WHERE articleId = $4 RETURNING authorId',
+    'UPDATE articles SET title = $1, article = $2, tag = $3 WHERE articleId = $4',
     [title, article, tag, articleId],
     (error, results) => {
       if (error) {
@@ -66,7 +66,6 @@ const updateArticle = (request, response) => {
           "articleId": results.rows[0].articleid,
           "title": title,
           "article": article,
-          "authorId": results.rows[0].authorId,
           "tag": tag
         }
       })
