@@ -77,11 +77,37 @@ const deleteArticle = (request, response) => {
   const articleId = parseInt(request.params.id)
 
   db.query('DELETE FROM articles WHERE articleId = $1', [articleId], (error, results) => {
-    if (error) {
-      throw error
+      if (error) {
+        response.status(400).json({
+          "status": "error",
+          "error": error
+        })
+      }
+      response.status(201).json({
+        "status": "success",
+        "data": {
+          "message": "Article deleted Successfully",
+          "articleId": articleId
+        }
+      })
     }
-    response.status(200).send(`Article deleted with ID: ${articleId}`)
-  })
+  )
+  db.query('DELETE FROM comments WHERE articleId = $1', [articleId], (error, results) => {
+    if (error) {
+      response.status(400).json({
+        "status": "error",
+        "error": error
+      })
+    }
+    response.status(201).json({
+      "status": "success",
+      "data": {
+        "message": "Article deleted Successfully",
+        "articleId": articleId
+      }
+    })
+  }
+)
 }
 
 module.exports = {
