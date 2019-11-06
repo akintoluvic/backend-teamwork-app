@@ -66,9 +66,19 @@ const deleteGif = (request, response) => {
 
   db.query('DELETE FROM gifs WHERE gifId = $1', [gifId], (error, results) => {
     if (error) {
-      throw error
+      response.status(400).json({
+        "status": "error",
+        "error": error
+      })
     }
-    response.status(200).send(`User deleted with ID: ${gifId}`)
+    
+    response.status(201).json({
+      "status": "success",
+      "data": {
+        "message": "Gif and comments deleted Successfully",
+        "gifId": gifId
+      }
+    })
   })
 }
 
