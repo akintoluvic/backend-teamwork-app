@@ -25,6 +25,7 @@ const createArticle = (request, response) => {
 
   db.query('INSERT INTO articles (title, article, authorId, tag) VALUES ($1, $2, $3, $4) RETURNING articleId', [title, article, authorId, tag], (error, results) => {
     if (error) {
+      console.log(error)
       response.status(400).json({
         "status": "error",
         "error": error

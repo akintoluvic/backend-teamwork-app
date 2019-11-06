@@ -23,12 +23,25 @@ const getGifById = (request, response) => {
 const createGif = (request, response) => {
   const { title, imageUrl, authorId, tag } = request.body
 
-  db.query('INSERT INTO gifs (title, imageUrl, authorId, tag) VALUES ($1, $2, $3, $4)', [ title, imageUrl, authorId, tag ], (error, results) => {
+  db.query('INSERT INTO gifs (title, imageUrl, authorId, tag) VALUES ($1, $2, $3, $4) RETURNING gifId', [title, imageUrl, authorId, tag], (error, results) => {
     if (error) {
-      throw error;
+      response.status(400).json({
+        "status": "error",
+        "error": error
+      })
     }
-    response.status(201).send(`Gif uploaded with ID: ${results.id}`)
-    console.log(results);
+    response.status(201).json({
+      "status": "success",
+      "data": {
+        "message": "Gif Created Successfully",
+        "gifId": results.rows[0].gifid,
+        "title": title,
+        "imageUrl": imageUrl,
+        "authorId": authorId,
+        "tag": tag,
+        // "createdOn": results.rows[0].createdOn
+      }
+    })
   })
 }
 
