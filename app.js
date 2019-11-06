@@ -30,6 +30,7 @@ app.get('/', (req, res, next) => {
 
 app.get('/users', users.getUsers)
 app.get('/users/:id', users.getUserById)
+app.post('/signin', users.signIn)
 app.post('/users', users.createUser)
 app.put('/users/:id', users.updateUser)
 app.delete('/users/:id', users.deleteUser)
