@@ -3,7 +3,6 @@ const db = require('../db')
 const getArticles = (request, response) => {
   db.query('SELECT * FROM articles ORDER BY createdOn DESC', (error, results) => {
     if (error) {
-      console.log(error)
       response.status(400).json({
         "status": "error",
         "error": error
