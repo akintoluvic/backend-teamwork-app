@@ -6,4 +6,6 @@
 
 [![Test Coverage](https://api.codeclimate.com/v1/badges/98c13074101682163989/test_coverage)](https://codeclimate.com/github/akintoluvic/backend-teamwork-app/test_coverage)
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/98c13074101682163989/maintainability)](https://codeclimate.com/github/akintoluvic/backend-teamwork-app/maintainability)
+
 REST API built with Node, Postgress, Cloudinary, TDD etc.
