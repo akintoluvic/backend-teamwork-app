@@ -1,13 +1,26 @@
 const db = require('../db')
 
 const getArticles = (request, response) => {
-  db.query('SELECT * FROM articles ORDER BY articleId ASC', (error, results) => {
+  db.query('SELECT * FROM articles ORDER BY createdOn DESC', (error, results) => {
     if (error) {
-      throw error
+      console.log(error)
+      response.status(400).json({
+        "status": "error",
+        "error": error
+      })
     }
-    response.status(200).json(results.rows)
+    response.status(201).json({
+      "status": "success",
+      "data": {
+        "message": "Article Created Successfully",
+        "articles": results.rows
+      }
+    })
   })
 }
+// SELECT * FROM articles LEFT JOIN gifs
+// SELECT ... FROM A LEFT JOIN B ON A .pka = B.fka;
+// results.rows
 
 const getArticleById = (request, response) => {
   const id = parseInt(request.params.id)
@@ -25,7 +38,6 @@ const createArticle = (request, response) => {
 
   db.query('INSERT INTO articles (title, article, authorId, tag) VALUES ($1, $2, $3, $4) RETURNING articleId', [title, article, authorId, tag], (error, results) => {
     if (error) {
-      console.log(error)
       response.status(400).json({
         "status": "error",
         "error": error

@@ -35,7 +35,7 @@ const createComment = (request, response) => {
       "status": "success",
       "data": {
         "message": "Article Created Successfully",
-        "commentId": results.rows[0].articleid,
+        "commentId": results.rows[0].commentid,
         "comment": comment,
         "authorId": authorId,
         "articleId": articleId,

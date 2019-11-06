@@ -1,3 +1,6 @@
+// Add column createdOn to all tables
+ALTER TABLE mytable ADD COLUMN created_at TIMESTAMP DEFAULT NOW()
+
 CREATE TABLE users (
 userId SERIAL PRIMARY KEY,
 firstName VARCHAR,
