@@ -23,12 +23,26 @@ const getCommentById = (request, response) => {
 const createComment = (request, response) => {
   const { comment, authorId, articleId, gifId } = request.body
 
-  db.query('INSERT INTO comments (comment, authorId, articleId, gifId) VALUES ($1, $2, $3, $4)', [comment, authorId, articleId, gifId], (error, results) => {
+  db.query('INSERT INTO comments (comment, authorId, articleId, gifId) VALUES ($1, $2, $3, $4) RETURNING commentId', [comment, authorId, articleId, gifId], (error, results) => {
     if (error) {
-      throw error;
+      console.log(error)
+      response.status(400).json({
+        "status": "error",
+        "error": error
+      })
     }
-    response.status(201).send(`Comment added with ID: ${results.id}`)
-    console.log(results);
+    response.status(201).json({
+      "status": "success",
+      "data": {
+        "message": "Article Created Successfully",
+        "commentId": results.rows[0].articleid,
+        "comment": comment,
+        "authorId": authorId,
+        "articleId": articleId,
+        "gifId": gifId,
+        // "createdOn": results.rows[0].createdOn
+      }
+    })
   })
 }
 
