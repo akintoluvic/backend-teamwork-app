@@ -25,13 +25,25 @@ const getUserById = (request, response) => {
 
 const createUser = (request, response) => {
   const { email, password } = request.body
-
-  db.query('INSERT INTO users (email, password) VALUES ($1, $2)', [email, password], (error, results) => {
-    if (error) {
-      throw error;
-    }
-    response.status(201).send(`User created successfully`)
-    console.log(results);
+  bcrypt.hash(password, 10).then(
+    (hash) => {
+      db.query('INSERT INTO users (email, password) VALUES ($1, $2) RETURNING userId', [email, hash], (error, results) => {
+        if (error) {
+          // throw error
+          response.status(400).json({
+            "status": "error",
+            "error": error
+          })
+        }
+        response.status(201).json({
+          "status": "success",
+          "data": {
+            "message": "User Created Successfully",
+            "email": email,
+            "userId": results.rows[0].userid
+          }
+        })
+    })
   })
 }
 
