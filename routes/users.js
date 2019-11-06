@@ -23,6 +23,89 @@ const getUserById = (request, response) => {
   })
 }
 
+const signIn = (request, response) => {
+  const { email, password} = request.body
+
+  db.query('SELECT * FROM users WHERE email = $1', [email], (error, results) => {
+    if (error) {
+      response.send('Issue 1')
+      throw error
+    }
+    if (results.rows.length < 1) {
+      return response.status(401).json({
+        error: new Error('User not found')
+      });
+    }
+    bcrypt.compare(password, results.rows[0].password).then(
+      (valid) => {
+        if (!valid) {
+          return response.status(401).json({
+            error: new Error('Incorrect password!')
+          });
+        }
+        const token = jwt.sign(
+          { "userId": results.rows[0].userid },
+          'RANDOM_TOKEN_SECRET',
+          { expiresIn: '24h' });
+          response.status(200).json({
+          userId: results.rows[0].userid,
+          token: token
+        });
+      }
+    ).catch(
+      (error) => {
+        response.status(500).json({
+          "message": "its here",
+          error: error
+        });
+      }
+    );
+  })
+  
+}
+
+
+exports.login = (req, res, next) => {
+  User.findOne({ email: req.body.email }).then(
+    (user) => {
+      if (!user) {
+        return res.status(401).json({
+          error: new Error('User not found!')
+        });
+      }
+      bcrypt.compare(req.body.password, user.password).then(
+        (valid) => {
+          if (!valid) {
+            return res.status(401).json({
+              error: new Error('Incorrect password!')
+            });
+          }
+          const token = jwt.sign(
+            { userId: user._id },
+            'RANDOM_TOKEN_SECRET',
+            { expiresIn: '24h' });
+          res.status(200).json({
+            userId: user._id,
+            token: token
+          });
+        }
+      ).catch(
+        (error) => {
+          res.status(500).json({
+            error: error
+          });
+        }
+      );
+    }
+  ).catch(
+    (error) => {
+      res.status(500).json({
+        error: error
+      });
+    }
+  );
+}
+
 const createUser = (request, response) => {
   const { firstName, lastName, email, password, gender, jobRole, department, address } = request.body
   bcrypt.hash(password, 10).then(
@@ -86,6 +169,7 @@ const deleteUser = (request, response) => {
 module.exports = {
   getUsers,
   getUserById,
+  signIn,
   createUser,
   updateUser,
   deleteUser,
