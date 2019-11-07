@@ -22,6 +22,7 @@ const getArticlesWithAtag = (request, response) => {
   const { tag } = request.params.tag
   db.query('SELECT * FROM articles WHERE tag = $1 ORDER BY createdOn DESC', [tag], (error, results) => {
     if (error) {
+      console.log(error)
       response.status(400).json({
         "status": "error",
         "error": error
