@@ -12,7 +12,7 @@ const getComments = (request, response) => {
 const getCommentById = (request, response) => {
   const id = parseInt(request.params.id)
 
-  db.query('SELECT * FROM comments WHERE commentId = $1', [id], (error, results) => {
+  db.query('SELECT * FROM comments WHERE postId = $1', [id], (error, results) => {
     if (error) {
       throw error
     }
@@ -46,22 +46,6 @@ const createComment = (request, response) => {
   })
 }
 
-// const updateUser = (request, response) => {
-//   const userId = parseInt(request.params.id)
-//   const { firstName, lastName } = request.body
-
-//   db.query(
-//     'UPDATE comments SET firstName = $1, lastName = $2 WHERE userId = $3',
-//     [firstName, lastName, commentId],
-//     (error, results) => {
-//       if (error) {
-//         throw error
-//       }
-//       response.status(200).send(`User modified with ID: ${commentId}`)
-//     }
-//   )
-// }
-
 const deleteComment = (request, response) => {
   const commentId = parseInt(request.params.id)
 
@@ -77,7 +61,6 @@ module.exports = {
   getComments,
   getCommentById,
   createComment,
-//   updateUser,
   deleteComment,
 }
 
