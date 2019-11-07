@@ -54,7 +54,6 @@ app.put('/articles/:id', posts.updateArticle)
 
 
 
-
 // // Potential Routes
 
 // app.get('/users', users.getUsers)
