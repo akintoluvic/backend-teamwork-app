@@ -28,10 +28,13 @@ app.get('/', (req, res, next) => {
     next()
 })
 
+// User  
+app.post('auth/signin', users.signIn)
+app.post('auth/create-user', users.createUser)
+
+
 app.get('/users', users.getUsers)
 app.get('/users/:id', users.getUserById)
-app.post('/signin', users.signIn)
-app.post('/users', users.createUser)
 app.put('/users/:id', users.updateUser)
 app.delete('/users/:id', users.deleteUser)
 
