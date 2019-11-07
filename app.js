@@ -1,9 +1,10 @@
 const express = require('express')
 const bodyParser = require('body-parser');
 const users = require('./routes/users')
-const gifs = require('./routes/gifs')
+const posts = require('./routes/posts')
+// const gifs = require('./routes/gifs')
 const comments = require('./routes/comments')
-const articles = require('./routes/articles')
+// const articles = require('./routes/articles')
 const app = express()
 
 app.use((req, res, next) => {
@@ -28,31 +29,45 @@ app.get('/', (req, res, next) => {
     next()
 })
 
-app.get('/users', users.getUsers)
-app.get('/users/:id', users.getUserById)
-app.post('/signin', users.signIn)
-app.post('/users', users.createUser)
-app.put('/users/:id', users.updateUser)
-app.delete('/users/:id', users.deleteUser)
+// User  
+app.post('auth/signin', users.signIn)
+app.post('auth/create-user', users.createUser)
 
-app.get('/gifs', gifs.getGifs)
-app.get('/gifs/:id', gifs.getGifById)
-app.post('/gifs', gifs.createGif)
+// User posts
+app.post('/gifs', posts.createGif)
+app.post('/articles', posts.createArticle)
+app.post('/articles/:id/comments', comments.createComment) // article comments
+app.post('/gifs/:id/comments', comments.createComment) // gif comments
+
+app.delete('/articles/:id', posts.deleteArticle)
+app.delete('/gifs/:id', posts.deleteGif)
+
+
+app.get('/feed', posts.getPosts) // feed
+app.get('/articles/:id', posts.getPostById) // single article
+app.get('/gifs/:id', posts.getPostById) // single gif
+app.get('/feed/tags/:tag', posts.getPostsWithAtag) // articles with a tag
+
+// app.put('/users/:id', users.updateUser)
 // app.put('/gifs/:id', gifs.updateGif)
-app.delete('/gifs/:id', gifs.deleteGif)
+app.put('/articles/:id', posts.updateArticle)
 
-app.get('/comments', comments.getComments)
-app.get('/comments/:id', comments.getCommentById)
-app.post('/comments', comments.createComment)
-// app.put('/gifs/:id', gifs.updateGif)
-app.delete('/comments/:id', comments.deleteComment)
 
-app.get('/articles', articles.getArticles)
-app.get('/articles/:id', articles.getArticleById)
-app.get('/articles/tags/:tag', articles.getArticlesWithAtag)
-app.post('/articles', articles.createArticle)
-app.put('/articles/:id', articles.updateArticle)
-app.delete('/articles/:id', articles.deleteArticle)
+
+
+// // Potential Routes
+
+// app.get('/users', users.getUsers)
+// app.get('/users/:id', users.getUserById)
+// app.delete('/users/:id', users.deleteUser)
+
+// app.get('/gifs', gifs.getGifs)
+// // app.put('/gifs/:id', gifs.updateGif)
+
+// app.get('/comments', comments.getComments)
+// app.get('/comments/:id', comments.getCommentById)
+// app.delete('/comments/:id', comments.deleteComment)
+
 
 app.get('/api/v1/', (req, res) => res.send('Base v1 Req success!'))
 
