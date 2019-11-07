@@ -31,7 +31,7 @@ const getArticlesWithAtag = (request, response) => {
     response.status(201).json({
       "status": "success",
       "data": {
-        "message": `Article with the tag: ${tag} returned uccessfully`,
+        "message": `Article with the tag: ${tag} returned successfully`,
         "articles": results.rows
       }
     })

@@ -49,7 +49,7 @@ app.delete('/comments/:id', comments.deleteComment)
 
 app.get('/articles', articles.getArticles)
 app.get('/articles/:id', articles.getArticleById)
-app.get('/articles/:tag', articles.getArticlesWithAtag)
+app.get('/articles/tags/:tag', articles.getArticlesWithAtag)
 app.post('/articles', articles.createArticle)
 app.put('/articles/:id', articles.updateArticle)
 app.delete('/articles/:id', articles.deleteArticle)
