@@ -11,7 +11,27 @@ const getArticles = (request, response) => {
     response.status(201).json({
       "status": "success",
       "data": {
-        "message": "Article Created Successfully",
+        "message": "All articles returned successfully",
+        "articles": results.rows
+      }
+    })
+  })
+}
+
+const getArticlesWithAtag = (request, response) => {
+  const { tag } = request.params.tag
+  db.query('SELECT * FROM articles WHERE tag = $1 ORDER BY createdOn DESC', [tag], (error, results) => {
+    if (error) {
+      console.log(error)
+      response.status(400).json({
+        "status": "error",
+        "error": error
+      })
+    }
+    response.status(201).json({
+      "status": "success",
+      "data": {
+        "message": `Article with the tag: ${tag} returned successfully`,
         "articles": results.rows
       }
     })
@@ -110,6 +130,7 @@ const deleteArticle = (request, response) => {
 
 module.exports = {
   getArticles,
+  getArticlesWithAtag,
   getArticleById,
   createArticle,
   updateArticle,
