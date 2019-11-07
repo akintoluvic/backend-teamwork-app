@@ -1,3 +1,4 @@
+// Tables are created with these queiries
 
 CREATE TABLE users (
 userId SERIAL PRIMARY KEY,
