@@ -39,11 +39,11 @@ app.get('/', (req, res, next) => {
 })
 
 // User  
-app.post('auth/signin', users.signIn)
-app.post('auth/create-user', users.createUser)
+app.post('/auth/signin', users.signIn)
+app.post('/auth/create-user', users.createUser)
 
 // User posts
-app.post('/gifs', posts.createGif)
+app.post('/gifs', multipartMiddleware, posts.createGif)
 app.post('/articles', posts.createArticle)
 app.post('/articles/:id/comments', comments.createComment) // article comments
 app.post('/gifs/:id/comments', comments.createComment) // gif comments
