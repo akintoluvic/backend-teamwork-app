@@ -4,6 +4,7 @@ const fs = require("fs");
 const cloudinary = require('cloudinary').v2;
 const multipart = require("connect-multiparty");                        
 const multipartMiddleware = multipart();
+
 // set your env variable CLOUDINARY_URL or set the following configuration
 cloudinary.config({
   cloud_name: 'viicioouous',
@@ -12,7 +13,7 @@ cloudinary.config({
 });
 
 
-
+// Routes
 const users = require('./routes/users')
 const posts = require('./routes/posts')
 // const gifs = require('./routes/gifs')
@@ -20,38 +21,63 @@ const comments = require('./routes/comments')
 // const articles = require('./routes/articles')
 const app = express()
 
-app.post("/", multipartMiddleware, function(req,res) {
-  let filename = req.files.dataFile.path;
-  cloudinary.uploader.upload(filename, function(error, result) {console.log(result, error)});
+// CORS
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  next();
+});
+
+app.use(bodyParser.json());
+
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+)
+
+app.post("/", multipartMiddleware, function(request, response) {
+  let filename = request.files.dataFile.path;
+  cloudinary.uploader.upload(filename, function(error, result) {
+    if (error) {
+      console.log(error)
+      response.status(400).json({
+        "status": "error",
+        "error": error
+      })
+    }
+    response.status(201).json({
+      "status": "success",
+      "data": {
+        "message": `File uploaded successfully`,
+        "details": result
+      }
+    })
+  })
+});
+
+  
 
 
-  // cloudinary.uploader.upload(filename,{ tags: "gotemps",resource_type: "auto" })
+
+  // cloudinary.uploader.upload(filename, { tags: "gotemps",resource_type: "auto" })
   //   .then(function(file) {
   //     console.log("Public id of the file is  " + file.public_id);
-  //     console.log("Url of the file is  " + file.url);/* Below variable template is part of my project and I have removed some of the unnecessary code so instead of template use whatever fits your situation */template.dataFile=file.url;  //save the url to your model                            template.save(); //save the model as you have changed it        res.redirect("/templates");
+  //     console.log("Url of the file is  " + file.url);
+  //     /* Below variable template is part of my project and I have removed some of the
+  //      unnecessary code so instead of template use whatever fits your situation 
+  //      */template.dataFile=file.url;  
+  //      //save the url to your model       template.save();
+  //       //save the model as you have changed it        res.redirect("/templates");
   //   })
   //   .catch(function(err) {                                                                  
   //     if (err) {
   //       console.warn(err);
   //     }
   //   });
-  //   res.redirect("/templates"); 
-})
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-    next();
-  });
 
-app.use(bodyParser.json());
-
-app.use(
-    bodyParser.urlencoded({
-      extended: true,
-    })
-  )
 
 app.get('/', (req, res, next) => {
     res.json({
