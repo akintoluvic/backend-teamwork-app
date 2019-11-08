@@ -39,6 +39,7 @@ app.use(
 
 app.post("/", multipartMiddleware, function(request, response) {
   let filename = request.files.dataFile.path;
+
   cloudinary.uploader.upload(filename, function(error, result) {
     if (error) {
       console.log(error)
@@ -54,29 +55,9 @@ app.post("/", multipartMiddleware, function(request, response) {
         "details": result
       }
     })
+    console.log(result.url)
   })
 });
-
-  
-
-
-
-  // cloudinary.uploader.upload(filename, { tags: "gotemps",resource_type: "auto" })
-  //   .then(function(file) {
-  //     console.log("Public id of the file is  " + file.public_id);
-  //     console.log("Url of the file is  " + file.url);
-  //     /* Below variable template is part of my project and I have removed some of the
-  //      unnecessary code so instead of template use whatever fits your situation 
-  //      */template.dataFile=file.url;  
-  //      //save the url to your model       template.save();
-  //       //save the model as you have changed it        res.redirect("/templates");
-  //   })
-  //   .catch(function(err) {                                                                  
-  //     if (err) {
-  //       console.warn(err);
-  //     }
-  //   });
-
 
 
 app.get('/', (req, res, next) => {
