@@ -1,4 +1,14 @@
 const db = require('../db')
+const fs = require("fs");
+const cloudinary = require('cloudinary').v2;
+
+// set your env variable CLOUDINARY_URL or set the following configuration
+cloudinary.config({
+  cloud_name: 'viicioouous',
+  api_key: '916525649235799',
+  api_secret: 'HZQ8-nMxR_CWn6H02GpYW4g_z8I'
+});
+
 
 // Get Routes
 
@@ -91,7 +101,7 @@ exports.getPosts = (request, response) => {
 
   exports.createGif = (request, response) => {
     const { title, imageUrl, authorId, tag } = request.body
-  
+    // cloud.uploads()
     db.query('INSERT INTO posts (title, imageUrl, authorId, tag) VALUES ($1, $2, $3, $4) RETURNING postId', [title, imageUrl, authorId, tag], (error, results) => {
       if (error) {
         response.status(400).json({
@@ -112,6 +122,17 @@ exports.getPosts = (request, response) => {
         }
       })
     })
+  }
+
+  exports.uploadFile = (request, response) => {
+    let filename = request.files.dataFile.path;
+    cloudinary.uploader.upload(filename, (error, result) =>{
+      if (error) {
+        console.log(error)
+        throw error}
+      response.send({url: result.url, id: result.public_id})
+    }
+    )
   }
 
   // Delete Routes

@@ -1,16 +1,8 @@
 const express = require('express')
 const bodyParser = require('body-parser');
-const fs = require("fs");
-const cloudinary = require('cloudinary').v2;
 const multipart = require("connect-multiparty");                        
 const multipartMiddleware = multipart();
 
-// set your env variable CLOUDINARY_URL or set the following configuration
-cloudinary.config({
-  cloud_name: 'viicioouous',
-  api_key: '916525649235799',
-  api_secret: 'HZQ8-nMxR_CWn6H02GpYW4g_z8I'
-});
 
 
 // Routes
@@ -37,28 +29,7 @@ app.use(
   })
 )
 
-app.post("/", multipartMiddleware, function(request, response) {
-  let filename = request.files.dataFile.path;
-
-  cloudinary.uploader.upload(filename, function(error, result) {
-    if (error) {
-      console.log(error)
-      response.status(400).json({
-        "status": "error",
-        "error": error
-      })
-    }
-    response.status(201).json({
-      "status": "success",
-      "data": {
-        "message": `File uploaded successfully`,
-        "details": result
-      }
-    })
-    console.log(result.url)
-  })
-});
-
+app.post("/", multipartMiddleware, posts.uploadFile)
 
 app.get('/', (req, res, next) => {
     res.json({
