@@ -6,7 +6,7 @@ const multipartMiddleware = multipart();
 
 
 // Routes
-const users = require('./routes/users')
+const userRoutes = require('./routes/users')
 const posts = require('./routes/posts')
 // const gifs = require('./routes/gifs')
 const comments = require('./routes/comments')
@@ -39,8 +39,7 @@ app.get('/', (req, res, next) => {
 })
 
 // User  
-app.post('/auth/signin', users.signIn)
-app.post('/auth/create-user', users.createUser)
+app.use('/auth', userRoutes)
 
 // User posts
 app.post('/gifs', multipartMiddleware, posts.createGif)

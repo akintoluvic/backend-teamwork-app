@@ -1,11 +1,9 @@
-const db = require('../db')
-
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('../db')
 
 
-const getUsers = (request, response) => {
+exports.getUsers = (request, response) => {
   db.query('SELECT * FROM users ORDER BY userId ASC', (error, results) => {
     if (error) {
       throw error
@@ -14,7 +12,7 @@ const getUsers = (request, response) => {
   })
 }
 
-const getUserById = (request, response) => {
+exports.getUserById = (request, response) => {
   const id = parseInt(request.params.id)
 
   db.query('SELECT * FROM users WHERE userId = $1', [id], (error, results) => {
@@ -25,7 +23,7 @@ const getUserById = (request, response) => {
   })
 }
 
-const signIn = (request, response) => {
+exports.signIn = (request, response) => {
   const { email, password} = request.body
 
   db.query('SELECT * FROM users WHERE email = $1', [email], (error, results) => {
@@ -66,7 +64,7 @@ const signIn = (request, response) => {
   
 }
 
-const createUser = (request, response) => {
+exports.createUser = (request, response) => {
   const { firstName, lastName, email, password, gender, jobRole, department, address } = request.body
   bcrypt.hash(password, 10).then(
     (hash) => {
@@ -99,7 +97,7 @@ const createUser = (request, response) => {
   })
 }
 
-const updateUser = (request, response) => {
+exports.updateUser = (request, response) => {
   const userId = parseInt(request.params.id)
   const { firstName, lastName } = request.body
 
@@ -115,7 +113,7 @@ const updateUser = (request, response) => {
   )
 }
 
-const deleteUser = (request, response) => {
+exports.deleteUser = (request, response) => {
   const userId = parseInt(request.params.id)
 
   db.query('DELETE FROM users WHERE userId = $1', [userId], (error, results) => {
@@ -126,12 +124,4 @@ const deleteUser = (request, response) => {
   })
 }
 
-module.exports = {
-  getUsers,
-  getUserById,
-  signIn,
-  createUser,
-  updateUser,
-  deleteUser,
-}
 
