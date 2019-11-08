@@ -1,5 +1,10 @@
 const express = require('express')
 const bodyParser = require('body-parser');
+
+const cloudinary = require('cloudinary').v2;
+cloudinary.uploader.upload("my_image.jpg", function(error, result) {console.log(result, error)});
+
+
 const users = require('./routes/users')
 const posts = require('./routes/posts')
 // const gifs = require('./routes/gifs')
