@@ -71,11 +71,11 @@ const createUser = (request, response) => {
       db.query('INSERT INTO users (firstName, lastName, email, password, gender, jobRole, department, address) VALUES ($1, $2, $3, $4, $5, $6, $7, $8 ) RETURNING userId, userType', 
       [firstName, lastName, email, hash, gender, jobRole, department, address], (error, results) => {
         if (error) {
+          console.log(error)
           response.status(400).json({
             "status": "error",
             "error": error
           })
-          throw error
         }
         response.status(201).json({
           "status": "success",

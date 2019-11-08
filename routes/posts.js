@@ -1,4 +1,16 @@
 const db = require('../db')
+const fs = require("fs");
+const cloudinary = require('cloudinary').v2;
+const dotenv = require('dotenv');
+dotenv.config();
+
+// set your env variable CLOUDINARY_URL or set the following configuration
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET
+});
+
 
 // Get Routes
 
@@ -23,7 +35,7 @@ exports.getPosts = (request, response) => {
   exports.getPostById = (request, response) => {
     const id = parseInt(request.params.id)
   
-    db.query('SELECT * FROM articles WHERE articleId = $1', [id], (error, results) => {
+    db.query('SELECT * FROM posts WHERE postId = $1', [id], (error, results) => {
     if (error) {
         console.log(error)
         response.status(400).json({
@@ -90,9 +102,13 @@ exports.getPosts = (request, response) => {
   }
 
   exports.createGif = (request, response) => {
-    const { title, imageUrl, authorId, tag } = request.body
-  
-    db.query('INSERT INTO posts (title, imageUrl, authorId, tag) VALUES ($1, $2, $3, $4) RETURNING postId', [title, imageUrl, authorId, tag], (error, results) => {
+    const { title, dataFile, authorId, tag } = request.body
+    let filename = request.files.dataFile.path;
+    cloudinary.uploader.upload(filename, (error, result) =>{
+      if (error) {
+        console.log(error)
+        throw error}
+    db.query('INSERT INTO posts (title, imageUrl, authorId, tag) VALUES ($1, $2, $3, $4) RETURNING postId', [title, result.url, authorId, tag], (error, results) => {
       if (error) {
         response.status(400).json({
           "status": "error",
@@ -102,16 +118,27 @@ exports.getPosts = (request, response) => {
       response.status(201).json({
         "status": "success",
         "data": {
-          "message": "Gif Created Successfully",
+          "message": "Gif created Successfully",
           "gifId": results.rows[0].postid,
           "title": title,
-          "imageUrl": imageUrl,
+          "imageUrl": result.url,
           "authorId": authorId,
           "tag": tag,
           // "createdOn": results.rows[0].createdOn
         }
       })
     })
+  })}
+
+  exports.uploadFile = (request, response) => {
+    let filename = request.files.dataFile.path;
+    cloudinary.uploader.upload(filename, (error, result) =>{
+      if (error) {
+        console.log(error)
+        throw error}
+      response.send({url: result.url, id: result.public_id})
+    }
+    )
   }
 
   // Delete Routes

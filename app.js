@@ -1,5 +1,11 @@
 const express = require('express')
 const bodyParser = require('body-parser');
+const multipart = require("connect-multiparty");                        
+const multipartMiddleware = multipart();
+
+
+
+// Routes
 const users = require('./routes/users')
 const posts = require('./routes/posts')
 // const gifs = require('./routes/gifs')
@@ -7,20 +13,23 @@ const comments = require('./routes/comments')
 // const articles = require('./routes/articles')
 const app = express()
 
+// CORS
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-    next();
-  });
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  next();
+});
 
 app.use(bodyParser.json());
 
 app.use(
-    bodyParser.urlencoded({
-      extended: true,
-    })
-  )
+  bodyParser.urlencoded({
+    extended: true,
+  })
+)
+
+app.post("/", multipartMiddleware, posts.uploadFile)
 
 app.get('/', (req, res, next) => {
     res.json({
@@ -30,11 +39,11 @@ app.get('/', (req, res, next) => {
 })
 
 // User  
-app.post('auth/signin', users.signIn)
-app.post('auth/create-user', users.createUser)
+app.post('/auth/signin', users.signIn)
+app.post('/auth/create-user', users.createUser)
 
 // User posts
-app.post('/gifs', posts.createGif)
+app.post('/gifs', multipartMiddleware, posts.createGif)
 app.post('/articles', posts.createArticle)
 app.post('/articles/:id/comments', comments.createComment) // article comments
 app.post('/gifs/:id/comments', comments.createComment) // gif comments
