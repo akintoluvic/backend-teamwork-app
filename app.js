@@ -10,7 +10,6 @@ cloudinary.config({
   api_key: '916525649235799',
   api_secret: 'HZQ8-nMxR_CWn6H02GpYW4g_z8I'
 });
-// cloudinary.uploader.upload("my_image.jpg", function(error, result) {console.log(result, error)});
 
 
 
@@ -23,17 +22,20 @@ const app = express()
 
 app.post("/", multipartMiddleware, function(req,res) {
   let filename = req.files.dataFile.path;
-  cloudinary.uploader.upload(filename,{ tags: "gotemps",resource_type: "auto" })
-    .then(function(file) {
-      console.log("Public id of the file is  " + file.public_id);
-      console.log("Url of the file is  " + file.url);/* Below variable template is part of my project and I have removed some of the unnecessary code so instead of template use whatever fits your situation */template.dataFile=file.url;  //save the url to your model                            template.save(); //save the model as you have changed it        res.redirect("/templates");
-    })
-    .catch(function(err) {                                                                  
-      if (err) {
-        console.warn(err);
-      }
-    });
-    res.redirect("/templates"); 
+  cloudinary.uploader.upload(filename, function(error, result) {console.log(result, error)});
+
+
+  // cloudinary.uploader.upload(filename,{ tags: "gotemps",resource_type: "auto" })
+  //   .then(function(file) {
+  //     console.log("Public id of the file is  " + file.public_id);
+  //     console.log("Url of the file is  " + file.url);/* Below variable template is part of my project and I have removed some of the unnecessary code so instead of template use whatever fits your situation */template.dataFile=file.url;  //save the url to your model                            template.save(); //save the model as you have changed it        res.redirect("/templates");
+  //   })
+  //   .catch(function(err) {                                                                  
+  //     if (err) {
+  //       console.warn(err);
+  //     }
+  //   });
+  //   res.redirect("/templates"); 
 })
 
 app.use((req, res, next) => {
