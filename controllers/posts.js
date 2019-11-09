@@ -123,8 +123,7 @@ exports.getPosts = (request, response) => {
           "title": title,
           "imageUrl": result.url,
           "authorId": authorId,
-          "tag": tag,
-          // "createdOn": results.rows[0].createdOn
+          "tag": tag
         }
       })
     })
