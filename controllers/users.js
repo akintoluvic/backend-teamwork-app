@@ -27,16 +27,12 @@ exports.signIn = (request, response) => {
   const { email, password} = request.body
   db.query('SELECT * FROM users WHERE email = $1', [email], (error, results) => {
     if (results.rows.length < 1) {
-      return response.status(401).json({
-        error: new Error('User not found')
-      });
+      return response.status(401).json({ "status": error, "error": "User with the email not found" });
     }
     bcrypt.compare(password, results.rows[0].password).then(
       (valid) => {
         if (!valid) {
-          return response.status(401).json({
-            error: new Error('Incorrect password!')
-          });
+          return response.status(401).json({ "status": error, "error": "Incorrect password" });
         }
         const token = jwt.sign({ "userId": results.rows[0].userid }, 'RANDOM_TOKEN_SECRET', { expiresIn: '24h' });
           response.status(200).json({
@@ -46,7 +42,7 @@ exports.signIn = (request, response) => {
       }
     ).catch((error) => {
         response.status(500).json({
-          "message": "its here",
+          "message": "Cannot signin, do try again",
           error: error
         });
       });
@@ -57,15 +53,13 @@ exports.createUser = (request, response) => {
   const { firstName, lastName, email, password, gender, jobRole, department, address } = request.body
   bcrypt.hash(password, 10).then((hash) => {
       db.query('INSERT INTO users (firstName, lastName, email, password, gender, jobRole, department, address) VALUES ($1, $2, $3, $4, $5, $6, $7, $8 ) RETURNING userId', [firstName, lastName, email, hash, gender, jobRole, department, address], (error, results) => {
-        if (error) {
-          response.status(400).json({
+        if (error) {response.status(400).json({
             "status": "error",
-            "error": error
-          })
-        }
+            "error": error })
+        } const token = jwt.sign({ "userId": results.rows[0].userid }, 'RANDOM_TOKEN_SECRET', { expiresIn: '24h' });
         response.status(201).json({
           "status": "success",
-          "data": {
+          "data": { "token": token,
             "message": "User Created Successfully",
             "email": email,
             "userId": results.rows[0].userid,
