@@ -1,41 +1,45 @@
 const express = require('express');
 const router = express.Router();
-
-const userCtrl = require('../controllers/users');
-
-
-app.post('/gifs', multipartMiddleware, posts.createGif)
-app.post('/articles', posts.createArticle)
-app.post('/articles/:id/comments', comments.createComment) // article comments
-app.post('/gifs/:id/comments', comments.createComment) // gif comments
-
-app.delete('/articles/:id', posts.deleteArticle)
-app.delete('/gifs/:id', posts.deleteGif)
+const multipart = require("connect-multiparty");                        
+const multipartMiddleware = multipart();
 
 
-app.get('/feed', posts.getPosts) // feed
-app.get('/articles/:id', posts.getPostById) // single article
-app.get('/gifs/:id', posts.getPostById) // single gif
-app.get('/feed/tags/:tag', posts.getPostsWithAtag) // articles with a tag
+const posts = require('../controllers/posts');
+const comments = require('../controllers/comments');
 
-// app.put('/users/:id', users.updateUser)
-// app.put('/gifs/:id', gifs.updateGif)
-app.put('/articles/:id', posts.updateArticle)
+
+router.post('/gifs', multipartMiddleware, posts.createGif)
+router.post('/articles', posts.createArticle)
+router.post('/articles/:id/comments', comments.createComment) // article comments
+router.post('/gifs/:id/comments', comments.createComment) // gif comments
+
+router.delete('/articles/:id', posts.deleteArticle)
+router.delete('/gifs/:id', posts.deleteGif)
+
+
+router.get('/feed', posts.getPosts) // feed
+router.get('/articles/:id', posts.getPostById) // single article
+router.get('/gifs/:id', posts.getPostById) // single gif
+router.get('/feed/tags/:tag', posts.getPostsWithAtag) // articles with a tag
+
+// router.put('/users/:id', users.updateUser)
+// router.put('/gifs/:id', gifs.updateGif)
+router.put('/articles/:id', posts.updateArticle)
 
 
 
 // // Potential Routes
 
-// app.get('/users', users.getUsers)
-// app.get('/users/:id', users.getUserById)
-// app.delete('/users/:id', users.deleteUser)
+// router.get('/users', users.getUsers)
+// router.get('/users/:id', users.getUserById)
+// router.delete('/users/:id', users.deleteUser)
 
-// app.get('/gifs', gifs.getGifs)
-// // app.put('/gifs/:id', gifs.updateGif)
+// router.get('/gifs', gifs.getGifs)
+// // router.put('/gifs/:id', gifs.updateGif)
 
-// app.get('/comments', comments.getComments)
-// app.get('/comments/:id', comments.getCommentById)
-// app.delete('/comments/:id', comments.deleteComment)
+// router.get('/comments', comments.getComments)
+// router.get('/comments/:id', comments.getCommentById)
+// router.delete('/comments/:id', comments.deleteComment)
 
 
 module.exports = router;
