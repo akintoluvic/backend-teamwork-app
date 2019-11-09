@@ -105,9 +105,8 @@ exports.getPosts = (request, response) => {
     const { title, dataFile, authorId, tag } = request.body
     let filename = request.files.dataFile.path;
     cloudinary.uploader.upload(filename, (error, result) =>{
-      if (error) {
-        console.log(error)
-        throw error}
+      if (error) { console.log(error)
+        throw error }
     db.query('INSERT INTO posts (title, imageUrl, authorId, tag) VALUES ($1, $2, $3, $4) RETURNING postId', [title, result.url, authorId, tag], (error, results) => {
       if (error) {
         response.status(400).json({
@@ -128,17 +127,6 @@ exports.getPosts = (request, response) => {
       })
     })
   })}
-
-  exports.uploadFile = (request, response) => {
-    let filename = request.files.dataFile.path;
-    cloudinary.uploader.upload(filename, (error, result) =>{
-      if (error) {
-        console.log(error)
-        throw error}
-      response.send({url: result.url, id: result.public_id})
-    }
-    )
-  }
 
   // Delete Routes
 
