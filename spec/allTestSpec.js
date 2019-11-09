@@ -104,7 +104,7 @@ describe("Posts Test Server", function() {
         });
       });
 
-      describe("Posts Test Server", function() {
+      describe("Delete Test Server", function() {
         describe("DELETE /", function() {
           it("returns status code 201", function(done) {
             request.delete(`${base_url}/articles/1`, function(error, response, body) {
@@ -115,10 +115,26 @@ describe("Posts Test Server", function() {
         });
       });
 
-      describe("Posts Test Server", function() {
+      describe("Delete Test Server", function() {
         describe("DELETE /", function() {
           it("returns status code 201", function(done) {
             request.delete(`${base_url}/gifs/1`, function(error, response, body) {
+              expect(response.statusCode).toBe(201);
+              done();
+            });
+          });
+        });
+      });
+      
+      describe("Post Articles", function() {
+        describe("POST /", function() {
+          it("returns status code 201", function(done) {
+            request.post(`${base_url}/articles`, { json: true, body: { 
+                "title": "fatddade@rty.com", 
+                "article": "me2367mjnfdw",
+                "authorId": 7,
+                "tag": "work"
+            }}, function(error, response, body) {
               expect(response.statusCode).toBe(201);
               done();
             });
