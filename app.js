@@ -23,16 +23,14 @@ app.use(
   })
 )
 
-// app.post("/", multipartMiddleware, posts.uploadFile)
-
-app.get('/', (req, res, next) => {
+app.get('/api/v1', (req, res, next) => {
     res.json({
         message: 'Hello World'
     })
     next()
 })
 
-app.use('/auth', userRoutes)
+app.use('/api/v1/auth', userRoutes)
 app.use('/api/v1', postRoutes)
 
 
