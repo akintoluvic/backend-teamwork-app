@@ -193,9 +193,37 @@ exports.getPosts = (request, response) => {
           "status": "success",
           "data": {
             "message": "Article updated Successfully",
-            "articleId": results.rows[0].articleid,
+            "articleId": articleId,
             "title": title,
             "article": article,
+            "tag": tag
+          }
+        })
+      }
+    )
+  }
+
+  exports.updateGif = (request, response) => {
+    const gifId = parseInt(request.params.id)
+    const {  title, imageUrl, tag } = request.body
+  
+    db.query(
+      'UPDATE posts SET title = $1, imageUrl = $2, tag = $3 WHERE postId = $4',
+      [title, imageUrl, tag, gifId],
+      (error, results) => {
+        if (error) {
+          response.status(400).json({
+            "status": "error",
+            "error": error
+          })
+        }
+        response.status(201).json({
+          "status": "success",
+          "data": {
+            "message": "Gif updated Successfully",
+            "gifId": gifId,
+            "title": title,
+            "imageUrl": imageUrl,
             "tag": tag
           }
         })

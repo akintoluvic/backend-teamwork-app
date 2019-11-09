@@ -25,6 +25,7 @@ router.get('/feed/tags/:tag', posts.getPostsWithAtag) // articles with a tag
 // router.put('/users/:id', users.updateUser)
 // router.put('/gifs/:id', gifs.updateGif)
 router.put('/articles/:id', posts.updateArticle)
+router.put('/gifs/:id', posts.updateGif)
 
 
 
