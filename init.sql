@@ -1,5 +1,3 @@
-// Tables are created with these queiries
-
 CREATE TABLE users (
 userId SERIAL PRIMARY KEY,
 firstName VARCHAR,
@@ -14,8 +12,8 @@ userType VARCHAR DEFAULT 'employee',
 createdOn TIMESTAMP DEFAULT NOW()
 );
 
-INSERT INTO users (firstName, firstName, lastName, email, password, gender, jobRole, department, address)
-('Moha', 'Buhar', 'moha@buar.com', 'mohabu');
+INSERT INTO users (firstName, lastName, email, password, gender, jobRole, department, address, userType)
+VALUES ('Moha', 'Buhar', 'ade@ade.com', 'ade1234', 'male', 'CEO', 'Management', '12, Olol Street, Ageege, Lagos', 'admin');
 
 CREATE TABLE posts (
 postId SERIAL PRIMARY KEY,
