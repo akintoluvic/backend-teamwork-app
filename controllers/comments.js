@@ -21,9 +21,8 @@ exports.getCommentById = (request, response) => {
 }
 
 exports.createComment = (request, response) => {
-  const { comment, authorId, articleId, gifId } = request.body
-
-  db.query('INSERT INTO comments (comment, authorId, articleId, gifId) VALUES ($1, $2, $3, $4) RETURNING commentId', [comment, authorId, articleId, gifId], (error, results) => {
+  const { comment, authorId, Id } = request.body
+  db.query('INSERT INTO comments (comment, authorId, postid) VALUES ($1, $2, $3) RETURNING commentId', [comment, authorId, Id], (error, results) => {
     if (error) {
       console.log(error)
       response.status(400).json({
@@ -31,16 +30,16 @@ exports.createComment = (request, response) => {
         "error": error
       })
     }
+    // console.log(results)
     response.status(201).json({
       "status": "success",
       "data": {
-        "message": "Article Created Successfully",
+        "message": "Comment created Successfully",
         "commentId": results.rows[0].commentid,
         "comment": comment,
         "authorId": authorId,
-        "articleId": articleId,
-        "gifId": gifId,
-        // "createdOn": results.rows[0].createdOn
+        "Id": Id,
+        "createdOn": results.rows[0].createdOn
       }
     })
   })

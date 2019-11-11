@@ -10,8 +10,8 @@ const comments = require('../controllers/comments');
 
 router.post('/gifs', auth, multipartMiddleware, posts.createGif)
 router.post('/articles', auth, posts.createArticle)
-router.post('/articles/:id/comments', auth, comments.createComment) // article comments
-router.post('/gifs/:id/comments', auth, comments.createComment) // gif comments
+router.post('/articles/:id/comment', auth, comments.createComment) // article comments
+router.post('/gifs/:id/comment', auth, comments.createComment) // gif comments
 
 router.delete('/articles/:id', auth, posts.deleteArticle)
 router.delete('/gifs/:id', auth, posts.deleteGif)

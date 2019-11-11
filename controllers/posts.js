@@ -50,6 +50,7 @@ exports.getPosts = (request, response) => {
         if (error) {
           throw error
         }
+        console.log(results)
         response.status(200).json({ 
           "status": "success",
           "data": { 
@@ -65,8 +66,7 @@ exports.getPosts = (request, response) => {
   }
 
   exports.getPostsWithAtag = (request, response) => {
-    const { tag } = request.params.tag
-    db.query('SELECT * FROM posts WHERE tag = $1 ORDER BY createdOn DESC', [tag], (error, results) => {
+    db.query('SELECT * FROM posts WHERE tag = $1 ORDER BY createdOn DESC', [request.params.tag], (error, results) => {
       if (error) {
         console.log(error)
         response.status(400).json({
@@ -77,7 +77,7 @@ exports.getPosts = (request, response) => {
       response.status(201).json({
         "status": "success",
         "data": {
-          "message": `Posts with the tag: ${tag} returned successfully`,
+          "message": `${request.params.tag} posts returned successfully`,
           "posts": results.rows
         }
       })
