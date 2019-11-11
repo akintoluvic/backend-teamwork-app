@@ -4,7 +4,6 @@
   "description": "REST API using Node, Express, Postgres etc.",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server",
     "test": "jasmine-node spec",
     "coverage": "istanbul cover jasmine-node --captureExceptions spec/ && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
