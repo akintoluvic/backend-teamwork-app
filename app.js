@@ -23,12 +23,7 @@ app.use(
   })
 )
 
-app.get('/api/v1', (req, res, next) => {
-    res.json({
-        message: 'Hello World'
-    })
-    next()
-})
+app.use('/api/v1', express.static('public'))
 
 app.use('/api/v1/auth', userRoutes)
 app.use('/api/v1', postRoutes)
