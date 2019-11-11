@@ -43,12 +43,23 @@ exports.getPosts = (request, response) => {
           "error": error
         })
       }
-      response.status(201).json({
-        "status": "success",
-        "data": {
-          "message": `Posts with the id: ${id} returned successfully`,
-          "posts": results.rows
+      let title = results.rows[0].title
+      let article = results.rows[0].article
+      let url = results.rows[0].imageurl
+      db.query('SELECT * FROM comments WHERE postId = $1', [id], (error, results) => {
+        if (error) {
+          throw error
         }
+        response.status(200).json({ 
+          "status": "success",
+          "data": { 
+            "id": id,
+            title, 
+            article, 
+            url, 
+            "comments": results.rows 
+          }
+        })
       })
     })
   }
