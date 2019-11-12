@@ -34,7 +34,6 @@ exports.getPosts = (request, response) => {
 
   exports.getPostById = (request, response) => {
     const id = parseInt(request.params.id)
-  
     db.query('SELECT * FROM posts WHERE postId = $1', [id], (error, results) => {
     if (error) {
         console.log(error)
@@ -43,21 +42,16 @@ exports.getPosts = (request, response) => {
           "error": error
         })
       }
-      let title = results.rows[0].title
-      let article = results.rows[0].article
-      let url = results.rows[0].imageurl
+      let { title, article, imageUrl, createdon } = results.rows[0]
       db.query('SELECT * FROM comments WHERE postId = $1', [id], (error, results) => {
-        if (error) {
-          throw error
-        }
-        console.log(results)
+        if (error) { throw error }
         response.status(200).json({ 
           "status": "success",
           "data": { 
             "id": id,
             title, 
             article, 
-            url, 
+            imageUrl, createdon,
             "comments": results.rows 
           }
         })
