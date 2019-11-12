@@ -28,7 +28,7 @@ exports.signIn = (request, response) => {
     if (results.rows.length < 1) {
       return response.status(401).json({ status: error, error: 'User with the email not found' });
     }
-    bcrypt
+    return bcrypt
       .compare(password, results.rows[0].password)
       .then(valid => {
         if (!valid) {
