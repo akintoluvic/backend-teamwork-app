@@ -6,7 +6,7 @@ var exports = module.exports = {};
 
 
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 app.set('port', port);
 
 const server = http.createServer(app)
