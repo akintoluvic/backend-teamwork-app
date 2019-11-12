@@ -21,7 +21,7 @@ exports.getUserById = (request, response) => {
     }
     response.status(200).json(results.rows)
   })
-}
+};
 
 exports.signIn = (request, response) => {
   const { email, password} = request.body
