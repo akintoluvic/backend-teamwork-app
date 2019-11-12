@@ -5,7 +5,7 @@ module.exports = (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
     const userId = decodedToken.userId;
-    if (req.body.userId && req.body.userId !== userId) {
+    if (req.body.userId && req.body.userId !== userId) { 
       res.status(401).json({
         "message": "Invalid user ID",
          "error": "error"
@@ -13,10 +13,10 @@ module.exports = (req, res, next) => {
     } else {
       next();
     }
-  } catch {
+  } catch(error) {
     res.status(401).json({
-      "message": "Invalid request!",
-       error: error
+      "error": "You are not logged in, please Login first",
+       "status": "error"
     });
   }
 };
