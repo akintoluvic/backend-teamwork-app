@@ -36,7 +36,6 @@ exports.getPosts = (request, response) => {
     const id = parseInt(request.params.id)
     db.query('SELECT * FROM posts WHERE postId = $1', [id], (error, results) => {
     if (error) {
-        console.log(error)
         response.status(400).json({
           "status": "error",
           "error": error
