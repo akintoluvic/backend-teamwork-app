@@ -81,14 +81,8 @@ exports.createUser = (request, response) => {
           data: {
             token,
             message: 'User Created Successfully',
-            email,
             userId: results.rows[0].userid,
-            firstName,
-            lastName,
-            gender,
-            jobRole,
-            department,
-            address
+            ...request.body
           }
         });
       }
