@@ -86,24 +86,21 @@ exports.getPostsWithAtag = (request, response) => {
 };
 
 exports.getAllTags = (request, response) => {
-  db.query(
-    'SELECT DISTINCT tag FROM posts',
-    (error, results) => {
-      if (error) {
-        response.status(400).json({
-          status: 'error',
-          error
-        });
-      }
-      response.status(201).json({
-        status: 'success',
-        data: {
-          message: `All unique tags returned successfully`,
-          tags: results.rows
-        }
+  db.query('SELECT DISTINCT tag FROM posts', (error, results) => {
+    if (error) {
+      response.status(400).json({
+        status: 'error',
+        error
       });
     }
-  );
+    response.status(201).json({
+      status: 'success',
+      data: {
+        message: `All unique tags returned successfully`,
+        tags: results.rows
+      }
+    });
+  });
 };
 
 // Post Routes
