@@ -11,14 +11,27 @@ exports.getUsers = (request, response) => {
   });
 };
 
-exports.getUserById = (request, response) => {
+exports.getProfile = (request, response) => {
   // eslint-disable-next-line radix
   const id = parseInt(request.params.id);
   db.query('SELECT * FROM users WHERE userId = $1', [id], (error, results) => {
     if (error) {
       throw error;
     }
-    response.status(200).json(results.rows);
+    response.status(201).json({
+      status: 'success',
+      data: {
+        message: 'Profile returned successfully',
+        firstName: results.rows[0].firstname,
+        lastName: results.rows[0].lastname,
+        email: results.rows[0].email,
+        gender: results.rows[0].gender,
+        jobRole: results.rows[0].jobrole,
+        department: results.rows[0].department,
+        address: results.rows[0].address,
+        userType: results.rows[0].usertype
+      }
+    });
   });
 };
 
