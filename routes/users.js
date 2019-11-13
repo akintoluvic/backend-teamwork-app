@@ -7,5 +7,6 @@ const auth = require('../middleware/auth');
 
 router.post('/signin', userCtrl.signIn);
 router.post('/create-user', auth, userCtrl.createUser);
+router.put('/update-profile', auth, userCtrl.updateUser);
 
 module.exports = router;

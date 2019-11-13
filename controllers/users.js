@@ -91,17 +91,21 @@ exports.createUser = (request, response) => {
 };
 
 exports.updateUser = (request, response) => {
-  // eslint-disable-next-line radix
-  const userId = parseInt(request.params.id);
-  const { firstName, lastName } = request.body;
+  const { firstName, lastName, gender, jobRole, department, address, userId } = request.body;
   db.query(
-    'UPDATE users SET firstName = $1, lastName = $2 WHERE userId = $3',
-    [firstName, lastName, userId],
+    'UPDATE users SET firstName = $1, lastName = $2, gender=$3, jobRole=$4, department=$5, address=$6 WHERE userId = $7',
+    [firstName, lastName, gender, jobRole, department, address, userId],
     error => {
       if (error) {
         throw error;
       }
-      response.status(200).send(`User modified with ID: ${userId}`);
+      response.status(201).json({
+        status: 'success',
+        data: {
+          message: 'User Created Successfully',
+          ...request.body
+        }
+      });
     }
   );
 };
