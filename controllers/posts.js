@@ -85,6 +85,29 @@ exports.getPostsWithAtag = (request, response) => {
   );
 };
 
+exports.getAllTags = (request, response) => {
+  db.query(
+    'SELECT DISTINCT tag FROM posts',
+    [request.params.tag],
+    (error, results) => {
+      if (error) {
+        response.status(400).json({
+          status: 'error',
+          error
+        });
+      }
+      console.log(results);
+      // response.status(201).json({
+      //   status: 'success',
+      //   data: {
+      //     message: `${request.params.tag} posts returned successfully`,
+      //     posts: results.rows
+      //   }
+      // });
+    }
+  );
+};
+
 // Post Routes
 
 exports.createArticle = (request, response) => {

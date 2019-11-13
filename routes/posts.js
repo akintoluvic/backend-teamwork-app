@@ -21,6 +21,7 @@ router.get('/feed', auth, posts.getPosts); // feed
 router.get('/articles/:id', auth, posts.getPostById); // single article
 router.get('/gifs/:id', auth, posts.getPostById); // single gif
 router.get('/feed/tags/:tag', auth, posts.getPostsWithAtag); // articles with a tag
+router.get('/feed/tags/', auth, posts.getAllTags); // articles with a tag
 
 // router.put('/users/:id', users.updateUser)
 // router.put('/gifs/:id', gifs.updateGif)
