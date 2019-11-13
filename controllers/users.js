@@ -115,7 +115,7 @@ exports.updateUser = (request, response) => {
       response.status(201).json({
         status: 'success',
         data: {
-          message: 'User Created Successfully',
+          message: 'User updated Successfully',
           ...request.body
         }
       });
