@@ -73,12 +73,13 @@ exports.createUser = (request, response) => {
     gender,
     jobRole,
     department,
-    address
+    address,
+    userType
   } = request.body;
   bcrypt.hash(password, 10).then(hash => {
     db.query(
-      'INSERT INTO users (firstName, lastName, email, password, gender, jobRole, department, address) VALUES ($1, $2, $3, $4, $5, $6, $7, $8 ) RETURNING userId',
-      [firstName, lastName, email, hash, gender, jobRole, department, address],
+      'INSERT INTO users (firstName, lastName, email, password, gender, jobRole, department, address, userType) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9 ) RETURNING userId',
+      [firstName, lastName, email, hash, gender, jobRole, department, address, userType],
       (error, results) => {
         if (error) {
           response.status(400).json({
