@@ -18,6 +18,7 @@ router.delete('/articles/:id', auth, posts.deleteArticle);
 router.delete('/gifs/:id', auth, posts.deleteGif);
 
 router.get('/feed', auth, posts.getPosts); // feed
+router.get('/feed/:userId', auth, posts.getMyPosts); // articles with a tag
 router.get('/articles/:id', auth, posts.getPostById); // single article
 router.get('/gifs/:id', auth, posts.getPostById); // single gif
 router.get('/feed/tags/:tag', auth, posts.getPostsWithAtag); // articles with a tag
