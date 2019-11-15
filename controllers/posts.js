@@ -33,6 +33,29 @@ exports.getPosts = (request, response) => {
   });
 };
 
+exports.getMyPosts = (request, response) => {
+  const { id } = request.params.userId;
+  db.query(
+    'SELECT * FROM posts WHERE authorId=$1 ORDER BY createdOn DESC',
+    [id],
+    (error, results) => {
+      if (error) {
+        response.status(400).json({
+          status: 'error',
+          error
+        });
+      }
+      response.status(201).json({
+        status: 'success',
+        data: {
+          message: 'All posts returned successfully',
+          posts: results.rows
+        }
+      });
+    }
+  );
+};
+
 exports.getPostById = (request, response) => {
   // eslint-disable-next-line radix
   const id = parseInt(request.params.id);
