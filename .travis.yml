@@ -5,6 +5,8 @@ env:
 language: node_js
 node_js:
   - 'stable'
+directories:
+  - 'node-modules'
 install: npm install
 services:
   - postgresql
