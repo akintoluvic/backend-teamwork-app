@@ -66,7 +66,7 @@ exports.getPostById = (request, response) => {
         error
       });
     }
-    const { title, article, imageUrl, createdon } = results.rows[0];
+    // const { title, article, imageUrl, createdon } = results.rows[0];
     db.query('SELECT * FROM comments WHERE postId = $1', [id], (err, res) => {
       if (err) {
         throw err;
@@ -75,10 +75,10 @@ exports.getPostById = (request, response) => {
         status: 'success',
         data: {
           id,
-          title,
-          article,
-          imageUrl,
-          createdon,
+          // title,
+          // article,
+          // imageUrl,
+          // createdon,
           comments: res.rows
         }
       });

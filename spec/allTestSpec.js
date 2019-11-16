@@ -2,8 +2,25 @@
 /* eslint-disable no-undef */
 const request = require('request');
 const userTest = require('../app.js');
+const auth = require('../middleware/auth');
 
 const baseUrl = 'http://localhost:3000/api/v1';
+
+// eslint-disable-next-line no-unused-vars
+let token;
+
+// beforeAll(done => {
+//   request(app)
+//     .post('/login')
+//     .send({
+//       username: user,
+//       password: pw
+//     })
+//     .end((err, response) => {
+//       token = response.body.token; // save the token!
+//       done();
+//     });
+// });
 
 describe('User Test Server', function() {
   describe('POST /', function() {
@@ -19,12 +36,15 @@ describe('User Test Server', function() {
         },
         function(error, response, body) {
           expect(response.statusCode).toBe(200);
+          expect(response.body.status).toBe('success');
+          token = response.body.token;
           done();
         }
       );
     });
   });
 });
+console.log(token);
 
 describe('User Test Server', function() {
   describe('POST /', function() {
@@ -40,6 +60,7 @@ describe('User Test Server', function() {
         },
         function(error, response, body) {
           expect(response.statusCode).toBe(201);
+          expect(response.body.status).toBe('success');
           done();
         }
       );
