@@ -9,25 +9,25 @@ const auth = require('../middleware/auth');
 const posts = require('../controllers/posts');
 const comments = require('../controllers/comments');
 
-router.post('/gifs', auth, multipartMiddleware, posts.createGif);
-router.post('/articles', auth, posts.createArticle);
-router.post('/articles/:id/comment', auth, comments.createComment); // article comments
-router.post('/gifs/:id/comment', auth, comments.createComment); // gif comments
+router.post('/gifs', multipartMiddleware, posts.createGif);
+router.post('/articles', posts.createArticle);
+router.post('/articles/:id/comment', comments.createComment); // article comments
+router.post('/gifs/:id/comment', comments.createComment); // gif comments
 
-router.delete('/articles/:id', auth, posts.deleteArticle);
-router.delete('/gifs/:id', auth, posts.deleteGif);
+router.delete('/articles/:id', posts.deleteArticle);
+router.delete('/gifs/:id', posts.deleteGif);
 
-router.get('/feed', auth, posts.getPosts); // feed
-router.get('/feed/:userId', auth, posts.getMyPosts); // articles with a tag
-router.get('/articles/:id', auth, posts.getPostById); // single article
-router.get('/gifs/:id', auth, posts.getPostById); // single gif
-router.get('/feed/tags/:tag', auth, posts.getPostsWithAtag); // articles with a tag
-router.get('/feed/tags/', auth, posts.getAllTags); // articles with a tag
+router.get('/feed', posts.getPosts); // feed
+router.get('/feed/:userId', posts.getMyPosts); // articles with a tag
+router.get('/articles/:id', posts.getPostById); // single article
+router.get('/gifs/:id', posts.getPostById); // single gif
+router.get('/feed/tags/:tag', posts.getPostsWithAtag); // articles with a tag
+router.get('/feed/tags/', posts.getAllTags); // articles with a tag
 
 // router.put('/users/:id', users.updateUser)
 // router.put('/gifs/:id', gifs.updateGif)
-router.put('/articles/:id', auth, posts.updateArticle);
-router.put('/gifs/:id', auth, posts.updateGif);
+router.put('/articles/:id', posts.updateArticle);
+router.put('/gifs/:id', posts.updateGif);
 
 // // Potential Routes
 
