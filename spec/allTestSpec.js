@@ -17,8 +17,9 @@ describe('User Test Server', function() {
             password: 'me367mjnfdw'
           }
         },
-        function(error, response, body) {
+        function(error, response) {
           expect(response.statusCode).toBe(200);
+          expect(response.body.status).toBe('success');
           done();
         }
       );
@@ -38,8 +39,9 @@ describe('User Test Server', function() {
             password: 'me2367mjnfdw'
           }
         },
-        function(error, response, body) {
+        function(error, response) {
           expect(response.statusCode).toBe(201);
+          expect(response.body.status).toBe('success');
           done();
         }
       );
@@ -50,8 +52,9 @@ describe('User Test Server', function() {
 describe('Posts Test Server', function() {
   describe('GET /', function() {
     it('returns status code 201', function(done) {
-      request.get(`${baseUrl}/feed`, function(error, response, body) {
+      request.get(`${baseUrl}/feed`, function(error, response) {
         expect(response.statusCode).toBe(201);
+        expect(response.body.status).toBe('success');
         done();
       });
     });
@@ -61,7 +64,19 @@ describe('Posts Test Server', function() {
 describe('Posts Test Server', function() {
   describe('GET /', function() {
     it('returns status code 201', function(done) {
-      request.get(`${baseUrl}/articles/1`, function(error, response, body) {
+      request.get(`${baseUrl}/articles/1`, function(error, response) {
+        expect(response.statusCode).toBe(200);
+        expect(response.body.status).toBe('success');
+        done();
+      });
+    });
+  });
+});
+
+describe('Posts Test Server', function() {
+  describe('GET /', function() {
+    it('returns status code 201', function(done) {
+      request.get(`${baseUrl}/gifs/3`, function(error, response) {
         expect(response.statusCode).toBe(200);
         done();
       });
@@ -72,18 +87,7 @@ describe('Posts Test Server', function() {
 describe('Posts Test Server', function() {
   describe('GET /', function() {
     it('returns status code 201', function(done) {
-      request.get(`${baseUrl}/gifs/3`, function(error, response, body) {
-        expect(response.statusCode).toBe(200);
-        done();
-      });
-    });
-  });
-});
-
-describe('Posts Test Server', function() {
-  describe('GET /', function() {
-    it('returns status code 201', function(done) {
-      request.get(`${baseUrl}/feed/tags/work`, function(error, response, body) {
+      request.get(`${baseUrl}/feed/tags/work`, function(error, response) {
         expect(response.statusCode).toBe(201);
         done();
       });
@@ -104,7 +108,7 @@ describe('Posts Test Server', function() {
             tag: 'work'
           }
         },
-        function(error, response, body) {
+        function(error, response) {
           expect(response.statusCode).toBe(201);
           done();
         }
@@ -126,7 +130,7 @@ describe('Posts Test Server', function() {
             tag: 'work'
           }
         },
-        function(error, response, body) {
+        function(error, response) {
           expect(response.statusCode).toBe(201);
           done();
         }
@@ -138,7 +142,7 @@ describe('Posts Test Server', function() {
 describe('Delete Test Server', function() {
   describe('DELETE /', function() {
     it('returns status code 201', function(done) {
-      request.delete(`${baseUrl}/articles/1`, function(error, response, body) {
+      request.delete(`${baseUrl}/articles/1`, function(error, response) {
         expect(response.statusCode).toBe(201);
         done();
       });
@@ -149,7 +153,7 @@ describe('Delete Test Server', function() {
 describe('Delete Test Server', function() {
   describe('DELETE /', function() {
     it('returns status code 201', function(done) {
-      request.delete(`${baseUrl}/gifs/1`, function(error, response, body) {
+      request.delete(`${baseUrl}/gifs/1`, function(error, response) {
         expect(response.statusCode).toBe(201);
         done();
       });
@@ -171,7 +175,7 @@ describe('Post Articles', function() {
             tag: 'work'
           }
         },
-        function(error, response, body) {
+        function(error, response) {
           expect(response.statusCode).toBe(201);
           done();
         }

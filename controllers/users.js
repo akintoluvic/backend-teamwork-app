@@ -51,6 +51,7 @@ exports.signIn = (request, response) => {
           expiresIn: '24h'
         });
         return response.status(200).json({
+          status: 'success',
           userId: results.rows[0].userid,
           token
         });
