@@ -26,6 +26,10 @@ app.use(
   })
 );
 
+app.get('/', (req, res) => {
+  res.json({ status: 'success', message: 'Welcome To Testing API' });
+});
+
 app.use('/api/v1', express.static('public'));
 
 app.use('/api/v1/auth', userRoutes);
