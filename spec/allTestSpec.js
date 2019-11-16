@@ -62,7 +62,7 @@ describe('Posts Test Server', function() {
   describe('GET /', function() {
     it('returns status code 201', function(done) {
       request.get(`${baseUrl}/articles/1`, function(error, response, body) {
-        expect(response.statusCode).toBe(201);
+        expect(response.statusCode).toBe(200);
         done();
       });
     });
@@ -72,8 +72,8 @@ describe('Posts Test Server', function() {
 describe('Posts Test Server', function() {
   describe('GET /', function() {
     it('returns status code 201', function(done) {
-      request.get(`${baseUrl}/gifs/1`, function(error, response, body) {
-        expect(response.statusCode).toBe(201);
+      request.get(`${baseUrl}/gifs/3`, function(error, response, body) {
+        expect(response.statusCode).toBe(200);
         done();
       });
     });

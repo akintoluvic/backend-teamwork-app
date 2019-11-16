@@ -15,6 +15,7 @@ exports.uploads = filename => {
     if (error) {
       throw error;
     }
+    // eslint-disable-next-line no-undef
     response.send({ url: result.url, id: result.public_id });
   });
 };

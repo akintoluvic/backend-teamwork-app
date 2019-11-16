@@ -1,6 +1,7 @@
 env:
   global:
     - CC_TEST_REPORTER_ID=edb9c5d120b11b55d5d877b6e4e251d07eff8c107c9b026a4bf1ed42b0c8e93c
+    - NODE_ENV=test
 language: node_js
 node_js:
   - 'stable'
@@ -16,6 +17,7 @@ after_success: npm run coverage
 # env:
 #   global:
 #     - CC_TEST_REPORTER_ID=edb9c5d120b11b55d5d877b6e4e251d07eff8c107c9b026a4bf1ed42b0c8e93c
+#     - NODE_ENV=test
 # language: node_js
 # node_js:
 #   - 'stable'
