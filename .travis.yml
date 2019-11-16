@@ -1,15 +1,3 @@
-# language: node_js
-# node_js:
-#   - 'stable'
-# install: npm install
-# services:
-#   - postgresql
-# before_script:
-#   - psql -c 'create database test_db;' -U postgres
-# script: npm test
-# after_success: npm run coverage
-
-
 env:
   global:
     - CC_TEST_REPORTER_ID=edb9c5d120b11b55d5d877b6e4e251d07eff8c107c9b026a4bf1ed42b0c8e93c
@@ -21,10 +9,27 @@ services:
   - postgresql
 before_script:
   - psql -c 'create database test_db;' -U postgres
-  - npm install nyc -g
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
 script: npm test
 after_success: npm run coverage
-# - ./cc-test-reporter after-build -t lcov --exit-code $TRAVIS_TEST_RESULT
+
+
+# env:
+#   global:
+#     - CC_TEST_REPORTER_ID=edb9c5d120b11b55d5d877b6e4e251d07eff8c107c9b026a4bf1ed42b0c8e93c
+# language: node_js
+# node_js:
+#   - 'stable'
+# install: npm install
+# services:
+#   - postgresql
+# before_script:
+#   - psql -c 'create database test_db;' -U postgres
+#   - npm install nyc -g
+#   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+#   - chmod +x ./cc-test-reporter
+#   - ./cc-test-reporter before-build
+# script: npm test
+# after_success: npm run coverage
+# # - ./cc-test-reporter after-build -t lcov --exit-code $TRAVIS_TEST_RESULT
+
+
