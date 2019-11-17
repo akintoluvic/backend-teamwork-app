@@ -40,8 +40,8 @@ describe('User Test Server', function() {
           }
         },
         function(error, response) {
-          expect(response.statusCode).toBe(201);
-          expect(response.body.status).toBe('success');
+          expect(response.statusCode).toBe(401);
+          expect(response.body.status).toBe('error');
           done();
         }
       );
@@ -53,8 +53,8 @@ describe('Posts Test Server', function() {
   describe('GET /', function() {
     it('returns status code 201', function(done) {
       request.get(`${baseUrl}/feed`, function(error, response) {
-        expect(response.statusCode).toBe(201);
-        expect(response.body.status).toBe('success');
+        expect(response.statusCode).toBe(401);
+        expect(response.body.status).toBe(undefined);
         done();
       });
     });
@@ -65,8 +65,8 @@ describe('Posts Test Server', function() {
   describe('GET /', function() {
     it('returns status code 201', function(done) {
       request.get(`${baseUrl}/articles/1`, function(error, response) {
-        expect(response.statusCode).toBe(200);
-        expect(response.body.status).toBe('success');
+        expect(response.statusCode).toBe(401);
+        expect(response.body.status).toBe(undefined);
         done();
       });
     });
@@ -77,7 +77,7 @@ describe('Posts Test Server', function() {
   describe('GET /', function() {
     it('returns status code 201', function(done) {
       request.get(`${baseUrl}/gifs/3`, function(error, response) {
-        expect(response.statusCode).toBe(200);
+        expect(response.statusCode).toBe(401);
         done();
       });
     });
@@ -88,7 +88,7 @@ describe('Posts Test Server', function() {
   describe('GET /', function() {
     it('returns status code 201', function(done) {
       request.get(`${baseUrl}/feed/tags/work`, function(error, response) {
-        expect(response.statusCode).toBe(201);
+        expect(response.statusCode).toBe(401);
         done();
       });
     });
@@ -109,7 +109,7 @@ describe('Posts Test Server', function() {
           }
         },
         function(error, response) {
-          expect(response.statusCode).toBe(201);
+          expect(response.statusCode).toBe(401);
           done();
         }
       );
@@ -131,7 +131,7 @@ describe('Posts Test Server', function() {
           }
         },
         function(error, response) {
-          expect(response.statusCode).toBe(201);
+          expect(response.statusCode).toBe(401);
           done();
         }
       );
@@ -143,7 +143,7 @@ describe('Delete Test Server', function() {
   describe('DELETE /', function() {
     it('returns status code 201', function(done) {
       request.delete(`${baseUrl}/articles/1`, function(error, response) {
-        expect(response.statusCode).toBe(201);
+        expect(response.statusCode).toBe(401);
         done();
       });
     });
@@ -154,7 +154,7 @@ describe('Delete Test Server', function() {
   describe('DELETE /', function() {
     it('returns status code 201', function(done) {
       request.delete(`${baseUrl}/gifs/1`, function(error, response) {
-        expect(response.statusCode).toBe(201);
+        expect(response.statusCode).toBe(401);
         done();
       });
     });
@@ -176,7 +176,7 @@ describe('Post Articles', function() {
           }
         },
         function(error, response) {
-          expect(response.statusCode).toBe(201);
+          expect(response.statusCode).toBe(401);
           done();
         }
       );

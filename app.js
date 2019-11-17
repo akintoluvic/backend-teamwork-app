@@ -38,6 +38,7 @@ app.post('/add', (req, res) => {
   res.json({
     status: 'success',
     result: 'Welcome To Testing API',
+    // eslint-disable-next-line no-dupe-keys
     result: add(num1, num2)
   });
 });
