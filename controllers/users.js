@@ -16,7 +16,10 @@ exports.getProfile = (request, response) => {
   const id = parseInt(request.params.id);
   db.query('SELECT * FROM users WHERE userId = $1', [id], (error, results) => {
     if (error) {
-      throw error;
+      response.status(400).json({
+        status: 'error',
+        error
+      });
     }
     response.status(201).json({
       status: 'success',
