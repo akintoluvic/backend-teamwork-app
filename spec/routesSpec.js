@@ -1,7 +1,6 @@
 /* eslint-disable func-names */
 /* eslint-disable no-undef */
 const request = require('request');
-const userTest = require('../app.js');
 
 const baseUrl = 'http://localhost:3000/api/v1';
 
@@ -40,6 +39,25 @@ describe('User Test Server', function() {
         function(error, response) {
           expect(response.statusCode).toBe(401);
           expect(response.body.status).toBe('error');
+          done();
+        }
+      );
+    });
+  });
+  describe('POST /', function() {
+    it('returns status code 200', function(done) {
+      request.post(
+        `${baseUrl}/auth/update-profile`,
+        {
+          json: true,
+          body: {
+            address: 'fatddade@rty.com',
+            jobRole: 'me2367mjnfdw'
+          }
+        },
+        function(error, response) {
+          expect(response.statusCode).toBe(404);
+          expect(response.body.status).toBe(undefined);
           done();
         }
       );

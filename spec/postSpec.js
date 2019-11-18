@@ -1,28 +1,40 @@
 /* eslint-disable no-undef */
-const request = require('request');
 const posts = require('../controllers/posts');
+const comments = require('../controllers/comments');
+const users = require('../controllers/users');
 
-const baseUrl = 'http://localhost:3000/api/v1';
-
-describe('Post test contains', function() {
-  it('should be able to lower case a string', function() {
-    expect(response.status).toBe('401');
-    expect(posts.toLowerCase).toBeDefined();
-    expect(posts.toLowerCase('HELLO WORLD')).toEqual('hello world');
+describe('Controllers', () => {
+  it('posts', () => {
+    // expect(response.status).toBe('401');
+    expect(posts.getPosts).toBeDefined();
+    expect(posts.getMyPosts).toBeDefined();
+    expect(posts.getPostById).toBeDefined();
+    expect(posts.getPostsWithAtag).toBeDefined();
+    expect(posts.createArticle).toBeDefined();
+    expect(posts.createGif).toBeDefined();
+    expect(posts.updateGif).toBeDefined();
+    expect(posts.deleteArticle).toBeDefined();
+    expect(posts.deleteGif).toBeDefined();
+    expect(posts.updateArticle).toBeDefined();
+    expect(posts).toContain('dotenv');
+    // expect(posts).toContain('error');
+    // expect(posts.getPosts).toContain(response.status);
   });
-
-  it('should be able to upper case a string', function() {
-    expect(posts.toUpperCase).toBeDefined();
-    expect(posts.toUpperCase('hello world')).toEqual('HELLO WORLD');
+  it('comments', () => {
+    // expect(response.status).toBe('401');
+    expect(comments.getCommentById).toBeDefined();
+    expect(comments.getComments).toBeDefined();
+    expect(comments.createComment).toBeDefined();
+    expect(comments.deleteComment).toBeDefined();
   });
-
-  it('should be able to confirm if a string contains a substring', function() {
-    expect(posts.contains).toBeDefined();
-    expect(posts.contains('cloud_name')).toBeTruthy();
+  it('comments', () => {
+    // expect(response.status).toBe('401');
+    expect(users.getUsers).toBeDefined();
+    expect(users.getProfile).toBeDefined();
+    expect(users.createUser).toBeDefined();
+    expect(users.deleteUser).toBeDefined();
+    expect(users.updateUser).toBeDefined();
   });
-
-  it('should be able repeat a string multiple times', function() {
-    expect(posts.repeat).toBeDefined();
-    expect(posts.getPosts()).toEqual('hellohellohello');
-  });
+  //   expect(posts.toUpperCase('hello world')).toEqual('HELLO WORLD');
+  //   expect(posts.contains('cloud_name')).toBeTruthy();
 });
