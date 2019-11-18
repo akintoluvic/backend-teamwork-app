@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 const posts = require('../controllers/posts');
 const comments = require('../controllers/comments');
+const users = require('../controllers/users');
 
 describe('Controllers', () => {
   it('posts', () => {
@@ -26,7 +27,14 @@ describe('Controllers', () => {
     expect(comments.createComment).toBeDefined();
     expect(comments.deleteComment).toBeDefined();
   });
-
+  it('comments', () => {
+    // expect(response.status).toBe('401');
+    expect(users.getUsers).toBeDefined();
+    expect(users.getProfile).toBeDefined();
+    expect(users.createUser).toBeDefined();
+    expect(users.deleteUser).toBeDefined();
+    expect(users.updateUser).toBeDefined();
+  });
   //   expect(posts.toUpperCase('hello world')).toEqual('HELLO WORLD');
   //   expect(posts.contains('cloud_name')).toBeTruthy();
 });

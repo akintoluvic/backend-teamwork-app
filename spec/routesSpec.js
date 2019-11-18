@@ -44,6 +44,25 @@ describe('User Test Server', function() {
       );
     });
   });
+  describe('POST /', function() {
+    it('returns status code 200', function(done) {
+      request.post(
+        `${baseUrl}/auth/update-profile`,
+        {
+          json: true,
+          body: {
+            address: 'fatddade@rty.com',
+            jobRole: 'me2367mjnfdw'
+          }
+        },
+        function(error, response) {
+          expect(response.statusCode).toBe(404);
+          expect(response.body.status).toBe(undefined);
+          done();
+        }
+      );
+    });
+  });
   describe('GET /', function() {
     it('returns status code 201', function(done) {
       request.get(`${baseUrl}/feed`, function(error, response) {
