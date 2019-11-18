@@ -5,7 +5,7 @@ const userTest = require('../app.js');
 
 const baseUrl = 'http://localhost:3000/api/v1';
 
-beforeEach(function(done) {
+beforeEach(done => {
   utils.simulateAsyncOp(function() {
     asyncOpCompleted = true;
     done();
