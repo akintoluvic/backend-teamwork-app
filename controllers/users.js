@@ -128,14 +128,14 @@ exports.updateUser = (request, response) => {
   );
 };
 
-exports.deleteUser = (request, response) => {
-  // eslint-disable-next-line radix
-  const userId = parseInt(request.params.id);
+// exports.deleteUser = (request, response) => {
+//   // eslint-disable-next-line radix
+//   const userId = parseInt(request.params.id);
 
-  db.query('DELETE FROM users WHERE userId = $1', [userId], error => {
-    if (error) {
-      throw error;
-    }
-    response.status(200).send(`User deleted with ID: ${userId}`);
-  });
-};
+//   db.query('DELETE FROM users WHERE userId = $1', [userId], error => {
+//     if (error) {
+//       throw error;
+//     }
+//     response.status(200).send(`User deleted with ID: ${userId}`);
+//   });
+// };

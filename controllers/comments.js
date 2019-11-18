@@ -1,26 +1,5 @@
 const db = require('../db');
 
-exports.getComments = (request, response) => {
-  db.query('SELECT * FROM comments ORDER BY commentId ASC', (error, results) => {
-    if (error) {
-      throw error;
-    }
-    response.status(200).json(results.rows);
-  });
-};
-
-exports.getCommentById = (request, response) => {
-  // eslint-disable-next-line radix
-  const id = parseInt(request.params.id);
-
-  db.query('SELECT * FROM comments WHERE postId = $1', [id], (error, results) => {
-    if (error) {
-      throw error;
-    }
-    response.status(200).json(results.rows);
-  });
-};
-
 exports.createComment = (request, response) => {
   const { comment, authorId, Id } = request.body;
   db.query(
@@ -33,7 +12,6 @@ exports.createComment = (request, response) => {
           error
         });
       }
-      // console.log(results)
       response.status(201).json({
         status: 'success',
         data: {

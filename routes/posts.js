@@ -16,6 +16,7 @@ router.post('/gifs/:id/comment', auth, comments.createComment); // gif comments
 
 router.delete('/articles/:id', auth, posts.deleteArticle);
 router.delete('/gifs/:id', auth, posts.deleteGif);
+router.delete('/comments/:id', comments.deleteComment);
 
 router.get('/feed', auth, posts.getPosts); // feed
 router.get('/feed/:userId', auth, posts.getMyPosts); // articles with a tag
@@ -40,6 +41,5 @@ router.put('/gifs/:id', auth, posts.updateGif);
 
 // router.get('/comments', comments.getComments)
 // router.get('/comments/:id', comments.getCommentById)
-// router.delete('/comments/:id', comments.deleteComment)
 
 module.exports = router;
