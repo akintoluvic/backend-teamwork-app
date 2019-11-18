@@ -1,11 +1,19 @@
 /* eslint-disable func-names */
 /* eslint-disable no-undef */
 const request = require('request');
+const userTest = require('../app.js');
 
 const baseUrl = 'http://localhost:3000/api/v1';
 
+beforeEach(done => {
+  utils.simulateAsyncOp(function() {
+    asyncOpCompleted = true;
+    done();
+  });
+});
+
 describe('User Test Server', function() {
-  let Bearertoken;
+  let token;
   it('returns status code 200', function(done) {
     request.post(
       `${baseUrl}/auth/signin`,
@@ -17,25 +25,25 @@ describe('User Test Server', function() {
         }
       },
       function(error, response) {
+        const { token } = response.body;
         expect(response.statusCode).toBe(200);
         expect(response.body.status).toBe('success');
-        expect(response.body.userId).toBe(18);
-        return Bearertoken = response.body.token;
+        expect(response.body.status).toBe('success');
         done();
       }
     );
     describe('POST /', function() {
-      it('01 returns status code 200', function(done) {
+      it('returns status code 200', function(done) {
         request.post(
           `${baseUrl}/auth/create-user`,
           {
             json: true,
-            headers: { authorization: Bearertoken },
             body: {
               email: 'fatddade@rty.com',
               password: 'me2367mjnfdw'
             }
           },
+          { Authorization: token },
           function(error, response) {
             expect(response.statusCode).toBe(201);
             expect(response.body.status).toBe('success');
@@ -45,17 +53,17 @@ describe('User Test Server', function() {
       });
     });
     describe('POST /', function() {
-      it('02 returns status code 200', function(done) {
+      it('returns status code 200', function(done) {
         request.post(
           `${baseUrl}/auth/create-user`,
           {
             json: true,
-            headers: { authorization: Bearertoken },
             body: {
               email: 'fatddade@rty.com',
               password: 'me2367mjnfdw'
             }
           },
+          { Authorization: token },
           function(error, response) {
             expect(response.statusCode).toBe(401);
             expect(response.body.status).toBe('error');
