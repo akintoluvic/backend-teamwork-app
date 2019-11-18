@@ -1,7 +1,6 @@
 /* eslint-disable func-names */
 /* eslint-disable no-undef */
 const request = require('request');
-const userTest = require('../app.js');
 
 const baseUrl = 'http://localhost:3000/api/v1';
 
