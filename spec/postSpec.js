@@ -22,7 +22,6 @@ describe('Controllers', () => {
   });
   it('comments', () => {
     // expect(response.status).toBe('401');
-    expect(comments.getCommentById).toBeDefined();
     expect(comments.getComments).toBeDefined();
     expect(comments.createComment).toBeDefined();
     expect(comments.deleteComment).toBeDefined();

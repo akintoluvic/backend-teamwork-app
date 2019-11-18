@@ -130,7 +130,6 @@ exports.getAllTags = (request, response) => {
 
 exports.createArticle = (request, response) => {
   const { title, article, authorId, tag } = request.body;
-
   db.query(
     'INSERT INTO posts (title, article, authorId, tag) VALUES ($1, $2, $3, $4) RETURNING postId',
     [title, article, authorId, tag],
@@ -150,7 +149,6 @@ exports.createArticle = (request, response) => {
           article,
           authorId,
           tag
-          // "createdOn": results.rows[0].createdOn
         }
       });
     }
@@ -202,7 +200,6 @@ exports.deleteArticle = (request, response) => {
         error
       });
     }
-
     response.status(201).json({
       status: 'success',
       data: {
