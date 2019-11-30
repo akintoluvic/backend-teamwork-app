@@ -25,10 +25,7 @@ exports.getPosts = (request, response) => {
     }
     response.status(201).json({
       status: 'success',
-      data: {
-        message: 'All posts returned successfully',
-        posts: results.rows
-      }
+      data: results.rows
     });
   });
 };
@@ -47,10 +44,7 @@ exports.getMyPosts = (request, response) => {
       }
       response.status(201).json({
         status: 'success',
-        data: {
-          message: 'All posts returned successfully',
-          posts: results.rows
-        }
+        data: results.rows
       });
     }
   );
@@ -99,10 +93,7 @@ exports.getPostsWithAtag = (request, response) => {
       }
       response.status(201).json({
         status: 'success',
-        data: {
-          message: `${request.params.tag} posts returned successfully`,
-          posts: results.rows
-        }
+        data: results.rows
       });
     }
   );
@@ -118,10 +109,7 @@ exports.getAllTags = (request, response) => {
     }
     response.status(201).json({
       status: 'success',
-      data: {
-        message: `All unique tags returned successfully`,
-        tags: results.rows
-      }
+      data: results.rows
     });
   });
 };
@@ -160,6 +148,7 @@ exports.createGif = (request, response) => {
   const filename = request.files.dataFile.path;
   cloudinary.uploader.upload(filename, (err, result) => {
     if (err) {
+      // console.log(err);
       throw err;
     }
     db.query(
@@ -172,6 +161,9 @@ exports.createGif = (request, response) => {
             error
           });
         }
+        console.log(request);
+        console.log(request.files);
+        console.log(request.files.dataFile);
         response.status(201).json({
           status: 'success',
           data: {
