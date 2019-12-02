@@ -19,7 +19,7 @@ module.exports = (req, res, next) => {
   } catch (error) {
     res.status(401).json({
       error: 'You are not logged in, please Login first',
-      status: 'error',
+      status: 'error'
     });
   }
 };
