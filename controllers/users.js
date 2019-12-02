@@ -25,6 +25,7 @@ exports.getProfile = (request, response) => {
       status: 'success',
       data: {
         message: 'Profile returned successfully',
+        // userId: id,
         firstName: results.rows[0].firstname,
         lastName: results.rows[0].lastname,
         email: results.rows[0].email,
