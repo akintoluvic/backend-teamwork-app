@@ -117,10 +117,10 @@ exports.getAllTags = (request, response) => {
 // Post Routes
 
 exports.createArticle = (request, response) => {
-  const { title, article, authorId, tag } = request.body;
+  const { title, article, imageUrl, authorId, tag } = request.body;
   db.query(
-    'INSERT INTO posts (title, article, authorId, tag) VALUES ($1, $2, $3, $4) RETURNING postId',
-    [title, article, authorId, tag],
+    'INSERT INTO posts (title, article, imageUrl, authorId, tag) VALUES ($1, $2, $3, $4, $5) RETURNING postId',
+    [title, article, imageUrl, authorId, tag],
     (error, results) => {
       if (error) {
         response.status(400).json({
@@ -134,6 +134,7 @@ exports.createArticle = (request, response) => {
           message: 'Article Created Successfully',
           articleId: results.rows[0].postid,
           title,
+          imageUrl,
           article,
           authorId,
           tag
