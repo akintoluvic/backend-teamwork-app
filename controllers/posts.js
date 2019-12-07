@@ -131,7 +131,7 @@ exports.createArticle = (request, response) => {
       response.status(201).json({
         status: 'success',
         data: {
-          message: 'Article Created Successfully',
+          message: 'Post Created Successfully',
           articleId: results.rows[0].postid,
           title,
           imageUrl,
@@ -147,37 +147,21 @@ exports.createArticle = (request, response) => {
 exports.createGif = (request, response) => {
   const { title, authorId, tag } = request.body;
   const filename = request.files.dataFile.path;
-  cloudinary.uploader.upload(filename, (err, result) => {
-    if (err) {
-      // console.log(err);
-      throw err;
+  cloudinary.uploader.upload(filename, (error, result) => {
+    if (error) {
+      response.status(400).json({
+        status: 'error',
+        error
+      });
     }
-    db.query(
-      'INSERT INTO posts (title, imageUrl, authorId, tag) VALUES ($1, $2, $3, $4) RETURNING postId',
-      [title, result.url, authorId, tag],
-      (error, results) => {
-        if (error) {
-          response.status(400).json({
-            status: 'error',
-            error
-          });
-        }
-        console.log(request);
-        console.log(request.files);
-        console.log(request.files.dataFile);
-        response.status(201).json({
-          status: 'success',
-          data: {
-            message: 'Gif created Successfully',
-            gifId: results.rows[0].postid,
-            title,
-            imageUrl: result.url,
-            authorId,
-            tag
-          }
-        });
+    console.log(request.files.dataFile);
+    response.status(201).json({
+      status: 'success',
+      data: {
+        message: 'Gif created Successfully',
+        imageUrl: result.url
       }
-    );
+    });
   });
 };
 
