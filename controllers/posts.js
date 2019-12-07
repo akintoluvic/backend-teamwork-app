@@ -145,7 +145,6 @@ exports.createArticle = (request, response) => {
 };
 
 exports.createGif = (request, response) => {
-  const { title, authorId, tag } = request.body;
   const filename = request.files.dataFile.path;
   cloudinary.uploader.upload(filename, (error, result) => {
     if (error) {
