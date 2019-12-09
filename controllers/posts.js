@@ -125,7 +125,7 @@ exports.createArticle = (request, response) => {
       if (error) {
         response.status(400).json({
           status: 'error',
-          error
+          error: 'Unable to post'
         });
       }
       response.status(201).json({
@@ -150,7 +150,7 @@ exports.createGif = (request, response) => {
     if (error) {
       response.status(400).json({
         status: 'error',
-        error
+        error: 'Unable to upload file'
       });
     }
     console.log(request.files.dataFile);
